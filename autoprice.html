@@ -3,317 +3,300 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Auto Price Prediction</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Automobile Price Prediction</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #0a1628;
-    --navy2: #112240;
-    --blue: #1d6fa4;
-    --accent: #4fc3f7;
-    --accent2: #00e5ff;
-    --text: #e8f1f8;
-    --muted: #8baac4;
-    --card: #0d1f38;
-    --border: rgba(79,195,247,0.15);
-    --green: #4ade80;
-    --red: #f87171;
-    --amber: #fbbf24;
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2331;
+    --border: #21262d;
+    --accent: #58a6ff;
+    --accent-dim: rgba(88,166,255,0.1);
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --radius: 10px;
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    background: var(--navy);
+    background: var(--bg);
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px; line-height: 1.7;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px; line-height: 1.7;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* NAV */
   nav {
     position: fixed; top: 0; width: 100%; z-index: 100;
-    background: rgba(10,22,40,0.92);
-    backdrop-filter: blur(12px);
+    background: rgba(13,17,23,0.85);
+    backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
-    padding: 0 6%; height: 64px;
+    padding: 0 2.5rem; height: 60px;
     display: flex; align-items: center; justify-content: space-between;
   }
   .nav-logo {
-    font-family: 'Syne', sans-serif; font-weight: 800;
-    color: var(--accent); font-size: 1.1rem;
-    text-decoration: none;
+    font-weight: 500; font-size: 0.88rem;
+    color: var(--muted); text-decoration: none;
+    transition: color 0.15s;
   }
+  .nav-logo:hover { color: var(--text); }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a {
     color: var(--muted); text-decoration: none;
-    font-size: 0.88rem; font-weight: 500; transition: color 0.2s;
+    font-size: 0.88rem; font-weight: 450; transition: color 0.15s;
   }
-  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover { color: var(--text); }
+
+  /* PAGE WRAP */
+  .page { max-width: 960px; margin: 0 auto; padding: 0 2.5rem; }
 
   /* HERO */
   .project-hero {
-    padding: 9rem 6% 5rem;
-    background-image:
-      linear-gradient(rgba(79,195,247,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(79,195,247,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    position: relative; overflow: hidden;
-  }
-  .project-hero::before {
-    content: '';
-    position: absolute; top: -100px; right: 0;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(29,111,164,0.2) 0%, transparent 70%);
-    pointer-events: none;
+    padding: 7rem 2.5rem 4rem;
+    max-width: 960px; margin: 0 auto;
   }
   .breadcrumb {
-    font-size: 0.82rem; color: var(--muted);
-    margin-bottom: 1.2rem;
+    font-size: 0.78rem; color: var(--muted); margin-bottom: 1rem;
   }
-  .breadcrumb a { color: var(--accent); text-decoration: none; }
+  .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+  .breadcrumb a:hover { color: var(--text); }
   .project-badge {
     display: inline-block;
-    background: rgba(79,195,247,0.1);
-    border: 1px solid var(--border);
-    color: var(--accent); font-size: 0.78rem;
-    padding: 0.3rem 1rem; border-radius: 100px;
-    margin-bottom: 1.2rem; letter-spacing: 1px;
-    text-transform: uppercase;
+    background: var(--accent-dim);
+    color: var(--accent); font-size: 0.7rem; font-weight: 600;
+    padding: 0.2rem 0.7rem; border-radius: 6px;
+    margin-bottom: 1rem; letter-spacing: 0.02em;
   }
   .project-hero h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    font-weight: 800; letter-spacing: -1px;
-    margin-bottom: 1rem; line-height: 1.1;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700; letter-spacing: -0.04em;
+    margin-bottom: 0.8rem; line-height: 1.15;
   }
-  .project-hero h1 span { color: var(--accent); }
-  .project-hero p { color: var(--muted); max-width: 620px; margin-bottom: 2rem; }
+  .project-hero h1 em { font-style: normal; color: var(--accent); }
+  .project-hero p { color: var(--muted); max-width: 580px; margin-bottom: 2rem; font-size: 0.92rem; }
   .hero-metrics {
-    display: flex; gap: 2rem; flex-wrap: wrap;
-    padding: 1.5rem 2rem;
-    background: var(--card);
+    display: flex; gap: 0; flex-wrap: wrap;
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px; width: fit-content;
+    border-radius: var(--radius); width: fit-content;
+    overflow: hidden;
   }
-  .hm { text-align: center; }
+  .hm {
+    padding: 1rem 1.5rem; text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .hm:last-child { border-right: none; }
   .hm-val {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.8rem; font-weight: 800; color: var(--accent);
+    font-size: 1.25rem; font-weight: 700; color: var(--text);
+    letter-spacing: -0.03em; line-height: 1;
   }
-  .hm-label { font-size: 0.75rem; color: var(--muted); }
+  .hm-label { font-size: 0.7rem; color: var(--muted); margin-top: 0.25rem; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); }
 
   /* SECTIONS */
-  section { padding: 5rem 6%; }
-  section:nth-child(even) { background: rgba(13,31,56,0.5); }
+  .section-wrap { padding: 4rem 2.5rem; max-width: 960px; margin: 0 auto; }
   .sec-tag {
-    font-size: 0.72rem; font-weight: 500;
-    color: var(--accent); letter-spacing: 2px;
-    text-transform: uppercase; margin-bottom: 0.6rem;
+    font-size: 0.72rem; font-weight: 600;
+    color: var(--accent); letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 0.5rem;
   }
   .sec-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
-    font-weight: 700; margin-bottom: 0.8rem;
-    letter-spacing: -0.5px;
+    font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+    font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.03em;
   }
-  .sec-sub { color: var(--muted); max-width: 560px; margin-bottom: 2.5rem; }
+  .sec-sub { color: var(--muted); max-width: 520px; margin-bottom: 2rem; font-size: 0.88rem; }
 
-  /* ABOUT PROJECT */
+  /* INFO GRID */
   .info-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-    gap: 1rem; margin-bottom: 2.5rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 0.75rem; margin-bottom: 2rem;
   }
   .info-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 12px; padding: 1.4rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.1rem;
   }
-  .info-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.4rem; }
-  .info-val { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.95rem; }
+  .info-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; font-weight: 500; }
+  .info-val { font-weight: 600; font-size: 0.9rem; color: var(--text); }
 
-  /* EDA FINDINGS */
+  /* FINDING GRID */
   .finding-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-    gap: 1.2rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    gap: 0.75rem; margin-bottom: 2.5rem;
   }
   .finding-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 12px; padding: 1.5rem;
+    background: var(--surface); border: 1px solid var(--border);
     border-left: 3px solid var(--accent);
+    border-radius: var(--radius); padding: 1.25rem;
   }
-  .finding-title {
-    font-family: 'Syne', sans-serif; font-weight: 600;
-    font-size: 2.4rem;
-  }
-  .finding-text { font-size: 0.85rem; color: var(--muted); }
+  .finding-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.4rem; color: var(--text); }
+  .finding-text { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
 
-  /* CORRELATION BAR */
-  .corr-list { display: flex; flex-direction: column; gap: 0.7rem; max-width: 600px; }
-  .corr-item { display: flex; align-items: center; gap: 1rem; }
-  .corr-name { font-size: 0.85rem; width: 140px; flex-shrink: 0; font-family: 'DM Mono', monospace; }
-  .corr-bar-wrap { flex: 1; background: rgba(255,255,255,0.05); border-radius: 4px; height: 10px; }
-  .corr-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--blue), var(--accent)); }
-  .corr-val { font-size: 0.8rem; color: var(--accent); width: 40px; text-align: right; font-family: 'DM Mono', monospace; }
+  /* CORRELATION BARS */
+  .corr-list { display: flex; flex-direction: column; gap: 0.6rem; max-width: 560px; }
+  .corr-item { display: flex; align-items: center; gap: 0.9rem; }
+  .corr-name { font-size: 0.78rem; width: 130px; flex-shrink: 0; font-family: 'DM Mono', monospace; color: var(--muted); }
+  .corr-bar-wrap { flex: 1; background: var(--surface2); border-radius: 3px; height: 6px; }
+  .corr-bar { height: 100%; border-radius: 3px; background: var(--accent); opacity: 0.7; }
+  .corr-val { font-size: 0.75rem; color: var(--accent); width: 36px; text-align: right; font-family: 'DM Mono', monospace; }
 
-  /* MODEL TABLE */
+  /* TABLE */
   .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-  thead tr { border-bottom: 1px solid var(--accent); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+  thead tr { border-bottom: 1px solid var(--border); }
   th {
-    padding: 0.8rem 1rem; text-align: left;
-    font-family: 'Syne', sans-serif; font-weight: 600;
-    font-size: 0.8rem; color: var(--accent);
-    text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 0.7rem 0.9rem; text-align: left;
+    font-weight: 600; font-size: 0.72rem;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em;
   }
-  td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--border); }
-  tr.best-row { background: rgba(79,195,247,0.06); }
-  tr.best-row td:first-child { border-left: 3px solid var(--accent); }
+  td { padding: 0.8rem 0.9rem; border-bottom: 1px solid var(--border); color: var(--text); }
+  tr:last-child td { border-bottom: none; }
+  tr.best-row { background: var(--accent-dim); }
+  tr.best-row td:first-child { border-left: 2px solid var(--accent); }
   .badge-good { color: var(--green); font-weight: 500; }
   .badge-warn { color: var(--amber); font-weight: 500; }
   .badge-bad  { color: var(--red);  font-weight: 500; }
   .best-tag {
     display: inline-block;
-    background: rgba(79,195,247,0.15);
-    color: var(--accent); font-size: 0.7rem;
-    padding: 0.15rem 0.5rem; border-radius: 4px;
-    margin-left: 0.5rem; vertical-align: middle;
+    background: var(--accent-dim); color: var(--accent);
+    font-size: 0.65rem; font-weight: 600;
+    padding: 0.1rem 0.45rem; border-radius: 4px;
+    margin-left: 0.4rem; vertical-align: middle;
   }
 
   /* METRIC CARDS */
   .metric-grid {
     display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 1rem; margin-bottom: 2rem;
+    gap: 0.75rem; margin-bottom: 2rem;
   }
   .metric-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 12px; padding: 1.5rem; text-align: center;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem;
   }
   .metric-card .val {
-    font-family: 'Syne', sans-serif;
-    font-size: 2rem; font-weight: 800; color: var(--accent);
+    font-size: 1.5rem; font-weight: 700; color: var(--text);
+    letter-spacing: -0.04em; line-height: 1;
   }
-  .metric-card .lbl { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
-  .metric-card .desc { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; opacity: 0.7; }
+  .metric-card .lbl { font-size: 0.72rem; color: var(--muted); margin-top: 0.3rem; }
+  .metric-card .desc { font-size: 0.7rem; color: var(--muted); margin-top: 0.15rem; opacity: 0.75; }
 
   /* FEATURE IMPORTANCE */
-  .feat-list { display: flex; flex-direction: column; gap: 0.6rem; max-width: 620px; }
-  .feat-item { display: flex; align-items: center; gap: 1rem; }
-  .feat-rank {
-    font-family: 'Syne', sans-serif; font-weight: 700;
-    font-size: 0.8rem; color: var(--muted); width: 24px;
-  }
-  .feat-name { font-size: 0.85rem; width: 160px; flex-shrink: 0; }
-  .feat-bar-wrap { flex: 1; background: rgba(255,255,255,0.05); border-radius: 4px; height: 10px; }
-  .feat-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--blue), var(--accent)); }
-  .feat-val { font-size: 0.8rem; color: var(--accent); width: 48px; text-align: right; font-family: 'DM Mono', monospace; }
+  .feat-list { display: flex; flex-direction: column; gap: 0.5rem; max-width: 560px; }
+  .feat-item { display: flex; align-items: center; gap: 0.9rem; }
+  .feat-rank { font-weight: 600; font-size: 0.72rem; color: var(--muted); width: 18px; flex-shrink: 0; }
+  .feat-name { font-size: 0.8rem; width: 140px; flex-shrink: 0; font-family: 'DM Mono', monospace; color: var(--muted); }
+  .feat-bar-wrap { flex: 1; background: var(--surface2); border-radius: 3px; height: 6px; }
+  .feat-bar { height: 100%; border-radius: 3px; background: var(--accent); opacity: 0.75; }
+  .feat-val { font-size: 0.75rem; color: var(--accent); width: 44px; text-align: right; font-family: 'DM Mono', monospace; }
 
   /* PREDICTOR */
   .predictor-wrap {
     display: grid; grid-template-columns: 1fr 1fr;
-    gap: 2rem; align-items: start;
+    gap: 1.5rem; align-items: start;
   }
   .predictor-form {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 2rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
   }
-  .predictor-form h3 {
-    font-family: 'Syne', sans-serif; font-weight: 700;
-    margin-bottom: 1.5rem; font-size: 1.1rem;
-  }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .predictor-form h3 { font-weight: 600; margin-bottom: 1.25rem; font-size: 0.95rem; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
   .form-group.full { grid-column: 1 / -1; }
-  .form-group label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .form-group label { font-size: 0.72rem; color: var(--muted); font-weight: 500; letter-spacing: 0.02em; }
   .form-group select,
-  .form-group input {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 0.65rem 0.9rem;
-    border-radius: 8px; font-size: 0.88rem;
-    font-family: 'DM Sans', sans-serif;
-    outline: none; transition: border-color 0.2s;
-    width: 100%;
+  .form-group input[type=text] {
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text); padding: 0.55rem 0.75rem;
+    border-radius: 7px; font-size: 0.84rem;
+    font-family: 'Inter', sans-serif;
+    outline: none; transition: border-color 0.15s; width: 100%;
   }
   .form-group select:focus,
   .form-group input:focus { border-color: var(--accent); }
-  .form-group select option { background: var(--navy2); }
-  .slider-wrap { display: flex; flex-direction: column; gap: 0.3rem; }
-  .slider-val { font-size: 0.82rem; color: var(--accent); text-align: right; font-family: 'DM Mono', monospace; }
+  .form-group select option { background: var(--surface2); }
+  .slider-val { font-size: 0.75rem; color: var(--accent); font-family: 'DM Mono', monospace; }
   input[type=range] {
     -webkit-appearance: none; width: 100%; height: 4px;
-    background: rgba(79,195,247,0.2); border-radius: 4px;
-    outline: none; border: none; padding: 0;
+    background: var(--surface2); border-radius: 4px;
+    outline: none; border: none; padding: 0; margin-top: 0.3rem;
   }
   input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none; width: 16px; height: 16px;
+    -webkit-appearance: none; width: 14px; height: 14px;
     border-radius: 50%; background: var(--accent); cursor: pointer;
   }
   .predict-btn {
-    width: 100%; margin-top: 1.5rem;
-    background: var(--blue); color: #fff; border: none;
-    padding: 0.9rem; border-radius: 10px;
-    font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 600;
-    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    width: 100%; margin-top: 1.25rem;
+    background: var(--accent); color: #0d1117; border: none;
+    padding: 0.7rem; border-radius: 7px;
+    font-size: 0.88rem; font-weight: 600;
+    cursor: pointer; transition: opacity 0.15s, transform 0.15s;
   }
-  .predict-btn:hover { background: #2583bd; transform: translateY(-2px); }
+  .predict-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
   /* RESULT */
   .result-panel {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 2rem;
-    display: flex; flex-direction: column; gap: 1.5rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
+    display: flex; flex-direction: column; gap: 1.25rem;
   }
-  .result-panel h3 {
-    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem;
-  }
+  .result-panel h3 { font-weight: 600; font-size: 0.95rem; }
   .price-display {
-    text-align: center; padding: 2rem;
-    background: rgba(79,195,247,0.06);
-    border: 1px solid var(--border); border-radius: 12px;
+    text-align: center; padding: 1.75rem 1rem;
+    background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 8px;
   }
-  .price-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+  .price-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.4rem; font-weight: 500; }
   .price-value {
-    font-family: 'Syne', sans-serif;
-    font-size: 3rem; font-weight: 800; color: var(--accent); line-height: 1;
+    font-size: 2.4rem; font-weight: 700; color: var(--text);
+    line-height: 1; letter-spacing: -0.05em;
   }
-  .price-range { font-size: 0.82rem; color: var(--muted); margin-top: 0.5rem; }
-  .result-breakdown { display: flex; flex-direction: column; gap: 0.8rem; }
+  .price-range { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; }
+  .result-breakdown { display: flex; flex-direction: column; gap: 0.6rem; }
   .breakdown-item {
     display: flex; justify-content: space-between; align-items: center;
-    font-size: 0.85rem;
+    font-size: 0.8rem; padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
   }
+  .breakdown-item:last-child { border-bottom: none; padding-bottom: 0; }
   .breakdown-key { color: var(--muted); }
-  .breakdown-val { color: var(--text); font-weight: 500; }
+  .breakdown-val { color: var(--text); font-weight: 500; font-family: 'DM Mono', monospace; font-size: 0.75rem; }
   .breakdown-val.pos { color: var(--green); }
   .breakdown-val.neg { color: var(--red); }
-  .placeholder-msg {
-    text-align: center; padding: 3rem 2rem; color: var(--muted); font-size: 0.9rem;
-  }
-  .placeholder-msg .icon { font-size: 2.5rem; margin-bottom: 1rem; }
 
   /* FOOTER */
   footer {
     border-top: 1px solid var(--border);
-    padding: 2rem 6%;
+    padding: 1.75rem 2.5rem;
+    max-width: 960px; margin: 0 auto;
     display: flex; justify-content: space-between; align-items: center;
-    color: var(--muted); font-size: 0.82rem;
+    color: var(--muted); font-size: 0.8rem;
   }
-  footer a { color: var(--accent); text-decoration: none; }
+  footer a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+  footer a:hover { color: var(--text); }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  .fade { animation: fadeUp 0.6s ease both; }
+  .fade { animation: fadeUp 0.5s ease both; }
 
   @media (max-width: 768px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .project-hero { padding: 6rem 1.25rem 3rem; }
+    .section-wrap { padding: 3rem 1.25rem; }
     .predictor-wrap { grid-template-columns: 1fr; }
     .form-grid { grid-template-columns: 1fr; }
-    .hero-metrics { gap: 1.4rem; }
-    footer { flex-direction: column; gap: 0.5rem; }
-    nav { padding: 0 1.2rem; }
-    .nav-links { display: none; }
+    .metric-grid { grid-template-columns: 1fr 1fr; }
+    .hero-metrics { flex-wrap: wrap; }
+    footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.4rem; }
   }
 </style>
 </head>
@@ -321,21 +304,21 @@
 
 <!-- NAV -->
 <nav>
-  <a href="./index.html" class="nav-logo">← DS Portfolio</a>
+  <a href="./index.html" class="nav-logo">← Portfolio</a>
   <ul class="nav-links">
-    <li><a href="#about-project">About</a></li>
+    <li><a href="#about-project">Overview</a></li>
     <li><a href="#eda">EDA</a></li>
     <li><a href="#models">Models</a></li>
     <li><a href="#predictor">Predictor</a></li>
   </ul>
 </nav>
 
-<!-- PROJECT HERO -->
-<div class="project-hero">
-  <div class="breadcrumb"><a href="./index.html">Portfolio</a> /</div>
+<!-- HERO -->
+<div class="project-hero fade">
+  <div class="breadcrumb"><a href="./index.html">Portfolio</a> / Automobile Price Prediction</div>
   <div class="project-badge">Regression · Machine Learning</div>
-  <h1>Automobile<br><span>Price Prediction</span></h1>
-  <p>End-to-end data science project predicting car prices using 25 independent variables — from raw data cleaning to a production-ready Random Forest model with 94.6% accuracy.</p>
+  <h1>Automobile<br><em>Price Prediction</em></h1>
+  <p>End-to-end project predicting car prices using 25 variables — from raw data cleaning to a Random Forest model with 94.6% accuracy.</p>
   <div class="hero-metrics">
     <div class="hm"><div class="hm-val">201</div><div class="hm-label">Records</div></div>
     <div class="hm"><div class="hm-val">25</div><div class="hm-label">Features</div></div>
@@ -345,46 +328,32 @@
   </div>
 </div>
 
-<!-- ABOUT PROJECT -->
-<section id="about-project">
+<hr class="divider">
+
+<!-- OVERVIEW -->
+<div class="section-wrap" id="about-project">
   <div class="sec-tag">Overview</div>
   <h2 class="sec-title">About the Project</h2>
   <p class="sec-sub">A capstone data science project to help automobile management understand how car prices vary with design and specification variables.</p>
   <div class="info-grid">
-    <div class="info-card">
-      <div class="info-label">Dataset</div>
-      <div class="info-val">UCI Automobile Dataset</div>
-    </div>
-    <div class="info-card">
-      <div class="info-label">Problem Type</div>
-      <div class="info-val">Regression</div>
-    </div>
-    <div class="info-card">
-      <div class="info-label">Target Variable</div>
-      <div class="info-val">Car Price ($5,118 – $45,400)</div>
-    </div>
-    <div class="info-card">
-      <div class="info-label">Best Model</div>
-      <div class="info-val">Random Forest</div>
-    </div>
-    <div class="info-card">
-      <div class="info-label">Train / Test Split</div>
-      <div class="info-val">80% / 20%</div>
-    </div>
-    <div class="info-card">
-      <div class="info-label">Cross Validation</div>
-      <div class="info-val">5-Fold CV</div>
-    </div>
+    <div class="info-card"><div class="info-label">Dataset</div><div class="info-val">UCI Automobile Dataset</div></div>
+    <div class="info-card"><div class="info-label">Problem Type</div><div class="info-val">Regression</div></div>
+    <div class="info-card"><div class="info-label">Target Variable</div><div class="info-val">Car Price ($5,118 – $45,400)</div></div>
+    <div class="info-card"><div class="info-label">Best Model</div><div class="info-val">Random Forest</div></div>
+    <div class="info-card"><div class="info-label">Train / Test Split</div><div class="info-val">80% / 20%</div></div>
+    <div class="info-card"><div class="info-label">Cross Validation</div><div class="info-val">5-Fold CV</div></div>
   </div>
-</section>
+</div>
 
-<!-- EDA FINDINGS -->
-<section id="eda">
+<hr class="divider">
+
+<!-- EDA -->
+<div class="section-wrap" id="eda">
   <div class="sec-tag">Task 1</div>
   <h2 class="sec-title">EDA Findings</h2>
   <p class="sec-sub">Key insights discovered during exploratory data analysis across 25 independent variables.</p>
 
-  <div class="finding-grid" style="margin-bottom:2.5rem">
+  <div class="finding-grid">
     <div class="finding-card">
       <div class="finding-title">Price Distribution</div>
       <div class="finding-text">Price is right-skewed (skewness = 1.63). Most cars are priced between $5,000–$15,000 with a long tail of luxury vehicles up to $45,400.</div>
@@ -399,85 +368,43 @@
     </div>
     <div class="finding-card">
       <div class="finding-title">Brand Impact</div>
-      <div class="finding-text">Make is the strongest categorical predictor. Porsche, Jaguar and Mercedes sit at the top while Chevrolet and Plymouth are at the bottom of the price range.</div>
+      <div class="finding-text">Make is the strongest categorical predictor. Porsche, Jaguar and Mercedes sit at the top while Chevrolet and Plymouth are at the bottom.</div>
     </div>
     <div class="finding-card">
       <div class="finding-title">Engine Size</div>
-      <div class="finding-text">Engine size has the strongest positive correlation with price (0.87). Larger engines consistently command higher prices across all car makes.</div>
+      <div class="finding-text">Engine size has the strongest positive correlation with price (0.87). Larger engines consistently command higher prices across all makes.</div>
     </div>
     <div class="finding-card">
       <div class="finding-title">Fuel Efficiency vs Price</div>
-      <div class="finding-text">City and highway mpg show negative correlation with price — more expensive cars tend to have lower fuel efficiency due to larger, more powerful engines.</div>
+      <div class="finding-text">City and highway mpg show negative correlation with price — more expensive cars have lower fuel efficiency due to larger, more powerful engines.</div>
     </div>
   </div>
 
-  <h3 style="font-family:'Syne',sans-serif; font-weight:600; margin-bottom:1.2rem; font-size:1rem;">Top Feature Correlations with Price</h3>
+  <h3 style="font-weight:600; margin-bottom:1rem; font-size:0.9rem; color:var(--text);">Top Feature Correlations with Price</h3>
   <div class="corr-list">
-    <div class="corr-item">
-      <div class="corr-name">engine-size</div>
-      <div class="corr-bar-wrap"><div class="corr-bar" style="width:87%"></div></div>
-      <div class="corr-val">0.87</div>
-    </div>
-    <div class="corr-item">
-      <div class="corr-name">curb-weight</div>
-      <div class="corr-bar-wrap"><div class="corr-bar" style="width:83%"></div></div>
-      <div class="corr-val">0.83</div>
-    </div>
-    <div class="corr-item">
-      <div class="corr-name">horsepower</div>
-      <div class="corr-bar-wrap"><div class="corr-bar" style="width:81%"></div></div>
-      <div class="corr-val">0.81</div>
-    </div>
-    <div class="corr-item">
-      <div class="corr-name">width</div>
-      <div class="corr-bar-wrap"><div class="corr-bar" style="width:75%"></div></div>
-      <div class="corr-val">0.75</div>
-    </div>
-    <div class="corr-item">
-      <div class="corr-name">length</div>
-      <div class="corr-bar-wrap"><div class="corr-bar" style="width:68%"></div></div>
-      <div class="corr-val">0.68</div>
-    </div>
-    <div class="corr-item">
-      <div class="corr-name">wheel-base</div>
-      <div class="corr-bar-wrap"><div class="corr-bar" style="width:58%"></div></div>
-      <div class="corr-val">0.58</div>
-    </div>
-    <div class="corr-item">
-      <div class="corr-name">bore</div>
-      <div class="corr-bar-wrap"><div class="corr-bar" style="width:54%"></div></div>
-      <div class="corr-val">0.54</div>
-    </div>
+    <div class="corr-item"><div class="corr-name">engine-size</div><div class="corr-bar-wrap"><div class="corr-bar" style="width:87%"></div></div><div class="corr-val">0.87</div></div>
+    <div class="corr-item"><div class="corr-name">curb-weight</div><div class="corr-bar-wrap"><div class="corr-bar" style="width:83%"></div></div><div class="corr-val">0.83</div></div>
+    <div class="corr-item"><div class="corr-name">horsepower</div><div class="corr-bar-wrap"><div class="corr-bar" style="width:81%"></div></div><div class="corr-val">0.81</div></div>
+    <div class="corr-item"><div class="corr-name">width</div><div class="corr-bar-wrap"><div class="corr-bar" style="width:75%"></div></div><div class="corr-val">0.75</div></div>
+    <div class="corr-item"><div class="corr-name">length</div><div class="corr-bar-wrap"><div class="corr-bar" style="width:68%"></div></div><div class="corr-val">0.68</div></div>
+    <div class="corr-item"><div class="corr-name">wheel-base</div><div class="corr-bar-wrap"><div class="corr-bar" style="width:58%"></div></div><div class="corr-val">0.58</div></div>
+    <div class="corr-item"><div class="corr-name">bore</div><div class="corr-bar-wrap"><div class="corr-bar" style="width:54%"></div></div><div class="corr-val">0.54</div></div>
   </div>
-</section>
+</div>
 
-<!-- MODEL COMPARISON -->
-<section id="models">
+<hr class="divider">
+
+<!-- MODELS -->
+<div class="section-wrap" id="models">
   <div class="sec-tag">Task 2</div>
-  <h2 class="sec-title">Model Comparison Report</h2>
-  <p class="sec-sub">Six regression models were trained and evaluated. Based on the metrics evaluation, Random Forest is the best model for production.</p>
+  <h2 class="sec-title">Model Comparison</h2>
+  <p class="sec-sub">Six regression models were trained and evaluated. Random Forest was selected for production based on all metrics.</p>
 
   <div class="metric-grid">
-    <div class="metric-card">
-      <div class="val">0.9462</div>
-      <div class="lbl">Best R² Test</div>
-      <div class="desc">Random Forest</div>
-    </div>
-    <div class="metric-card">
-      <div class="val">$2,564</div>
-      <div class="lbl">Lowest RMSE</div>
-      <div class="desc">Random Forest</div>
-    </div>
-    <div class="metric-card">
-      <div class="val">$1,702</div>
-      <div class="lbl">Lowest MAE</div>
-      <div class="desc">Random Forest</div>
-    </div>
-    <div class="metric-card">
-      <div class="val">0.038</div>
-      <div class="lbl">Smallest Gap</div>
-      <div class="desc">Least overfit</div>
-    </div>
+    <div class="metric-card"><div class="val">0.9462</div><div class="lbl">Best R² Test</div><div class="desc">Random Forest</div></div>
+    <div class="metric-card"><div class="val">$2,564</div><div class="lbl">Lowest RMSE</div><div class="desc">Random Forest</div></div>
+    <div class="metric-card"><div class="val">$1,702</div><div class="lbl">Lowest MAE</div><div class="desc">Random Forest</div></div>
+    <div class="metric-card"><div class="val">0.038</div><div class="lbl">Smallest Gap</div><div class="desc">Least overfit</div></div>
   </div>
 
   <div class="table-wrap">
@@ -559,10 +486,9 @@
     </table>
   </div>
 
-  <!-- Feature Importance -->
-  <div style="margin-top:3rem">
-    <h3 style="font-family:'Syne',sans-serif; font-weight:600; margin-bottom:0.5rem; font-size:1rem;">Top Features Affecting Price</h3>
-    <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1.5rem">Identified by Random Forest feature importance scoring</p>
+  <div style="margin-top:2.5rem">
+    <h3 style="font-weight:600; margin-bottom:0.4rem; font-size:0.9rem;">Top Features Affecting Price</h3>
+    <p style="font-size:0.8rem; color:var(--muted); margin-bottom:1.25rem">Identified by Random Forest feature importance scoring</p>
     <div class="feat-list">
       <div class="feat-item"><div class="feat-rank">1</div><div class="feat-name">engine-size</div><div class="feat-bar-wrap"><div class="feat-bar" style="width:95%"></div></div><div class="feat-val">0.350</div></div>
       <div class="feat-item"><div class="feat-rank">2</div><div class="feat-name">curb-weight</div><div class="feat-bar-wrap"><div class="feat-bar" style="width:75%"></div></div><div class="feat-val">0.220</div></div>
@@ -574,22 +500,23 @@
       <div class="feat-item"><div class="feat-rank">8</div><div class="feat-name">bore</div><div class="feat-bar-wrap"><div class="feat-bar" style="width:12%"></div></div><div class="feat-val">0.023</div></div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- LIVE PREDICTOR -->
-<section id="predictor">
+<hr class="divider">
+
+<!-- PREDICTOR -->
+<div class="section-wrap" id="predictor">
   <div class="sec-tag">Live Demo</div>
   <h2 class="sec-title">Price Predictor</h2>
   <p class="sec-sub">Enter car specifications to get an estimated price based on the Random Forest model's learned patterns.</p>
 
   <div class="predictor-wrap">
-    <!-- FORM -->
     <div class="predictor-form">
       <h3>Car Specifications</h3>
       <div class="form-grid">
 
         <div class="form-group">
-          <label>Make</label>
+          <label>Make Segment</label>
           <select id="make" onchange="updateEstimate()">
             <option value="budget">Budget (Chevrolet, Honda)</option>
             <option value="midrange" selected>Mid-range (Toyota, Nissan)</option>
@@ -626,38 +553,29 @@
         </div>
 
         <div class="form-group full">
-          <label>Engine Size (cc): <span id="engine-val">130</span></label>
-          <div class="slider-wrap">
-            <input type="range" id="engine" min="61" max="326" value="130" oninput="document.getElementById('engine-val').textContent=this.value; updateEstimate()">
-          </div>
+          <label>Engine Size (cc) — <span class="slider-val" id="engine-val">130</span></label>
+          <input type="range" id="engine" min="61" max="326" value="130" oninput="document.getElementById('engine-val').textContent=this.value; updateEstimate()">
         </div>
 
         <div class="form-group full">
-          <label>Horsepower: <span id="hp-val">100</span> HP</label>
-          <div class="slider-wrap">
-            <input type="range" id="hp" min="48" max="288" value="100" oninput="document.getElementById('hp-val').textContent=this.value; updateEstimate()">
-          </div>
+          <label>Horsepower — <span class="slider-val" id="hp-val">100</span> HP</label>
+          <input type="range" id="hp" min="48" max="288" value="100" oninput="document.getElementById('hp-val').textContent=this.value; updateEstimate()">
         </div>
 
         <div class="form-group full">
-          <label>Curb Weight (lbs): <span id="weight-val">2500</span></label>
-          <div class="slider-wrap">
-            <input type="range" id="weight" min="1488" max="4066" value="2500" oninput="document.getElementById('weight-val').textContent=this.value; updateEstimate()">
-          </div>
+          <label>Curb Weight (lbs) — <span class="slider-val" id="weight-val">2500</span></label>
+          <input type="range" id="weight" min="1488" max="4066" value="2500" oninput="document.getElementById('weight-val').textContent=this.value; updateEstimate()">
         </div>
 
         <div class="form-group full">
-          <label>Highway MPG: <span id="mpg-val">30</span></label>
-          <div class="slider-wrap">
-            <input type="range" id="mpg" min="16" max="54" value="30" oninput="document.getElementById('mpg-val').textContent=this.value; updateEstimate()">
-          </div>
+          <label>Highway MPG — <span class="slider-val" id="mpg-val">30</span></label>
+          <input type="range" id="mpg" min="16" max="54" value="30" oninput="document.getElementById('mpg-val').textContent=this.value; updateEstimate()">
         </div>
 
       </div>
       <button class="predict-btn" onclick="updateEstimate()">Estimate Price</button>
     </div>
 
-    <!-- RESULT PANEL -->
     <div class="result-panel">
       <h3>Price Estimate</h3>
       <div class="price-display">
@@ -691,66 +609,56 @@
           <span class="breakdown-val">—</span>
         </div>
       </div>
-      <p style="font-size:0.75rem; color:var(--muted); border-top:1px solid var(--border); padding-top:1rem;">
-        ⚠ This is a heuristic estimate based on feature importance patterns learned by the Random Forest model. For production use, integrate the trained model via API.
+      <p style="font-size:0.72rem; color:var(--muted); border-top:1px solid var(--border); padding-top:0.9rem; line-height:1.6;">
+        Heuristic estimate based on feature importance patterns learned by the Random Forest model. For production use, integrate the trained model via API.
       </p>
     </div>
   </div>
-</section>
+</div>
 
 <!-- FOOTER -->
 <footer>
-  <div>· Auto Price Prediction · Data Science Capstone</div>
+  <div>Auto Price Prediction · Data Science Capstone</div>
   <div><a href="./index.html">← Back to Portfolio</a></div>
 </footer>
 
 <script>
   function updateEstimate() {
-    const make       = document.getElementById('make').value;
-    const body       = document.getElementById('body').value;
-    const fuel       = document.getElementById('fuel').value;
-    const asp        = document.getElementById('aspiration').value;
-    const engine     = parseInt(document.getElementById('engine').value);
-    const hp         = parseInt(document.getElementById('hp').value);
-    const weight     = parseInt(document.getElementById('weight').value);
-    const mpg        = parseInt(document.getElementById('mpg').value);
+    const make   = document.getElementById('make').value;
+    const body   = document.getElementById('body').value;
+    const fuel   = document.getElementById('fuel').value;
+    const asp    = document.getElementById('aspiration').value;
+    const engine = parseInt(document.getElementById('engine').value);
+    const hp     = parseInt(document.getElementById('hp').value);
+    const weight = parseInt(document.getElementById('weight').value);
+    const mpg    = parseInt(document.getElementById('mpg').value);
 
-    // Base price by make segment
-    const makeBases = { budget: 7000, midrange: 12000, premium: 22000, luxury: 35000 };
-    const makeLabels = { budget: 'Budget segment', midrange: 'Mid-range segment', premium: 'Premium segment', luxury: 'Luxury segment' };
+    const makeBases  = { budget: 7000, midrange: 12000, premium: 22000, luxury: 35000 };
+    const makeLabels = { budget: 'Budget', midrange: 'Mid-range', premium: 'Premium', luxury: 'Luxury' };
     let price = makeBases[make];
 
-    // Engine size contribution (strongest feature 0.35 weight)
     const engineEffect = ((engine - 130) / 196) * 8000;
     price += engineEffect;
 
-    // Horsepower contribution (0.18 weight)
     const hpEffect = ((hp - 100) / 188) * 5000;
     price += hpEffect;
 
-    // Curb weight contribution (0.22 weight)
     const weightEffect = ((weight - 2500) / 2578) * 4000;
     price += weightEffect;
 
-    // MPG negative correlation
     const mpgEffect = ((30 - mpg) / 38) * 1500;
     price += mpgEffect;
 
-    // Body style adjustment
     const bodyAdj = { hatchback: -500, sedan: 0, wagon: 300, hardtop: 800, convertible: 2500 };
     price += bodyAdj[body] || 0;
 
-    // Turbo premium
     const turboAdj = asp === 'turbo' ? 2500 : 0;
     price += turboAdj;
 
-    // Diesel adjustment
     if (fuel === 'diesel') price += 800;
 
-    // Clamp to dataset range
     price = Math.max(5118, Math.min(45400, Math.round(price)));
 
-    // Update UI
     document.getElementById('price-output').textContent = '$' + price.toLocaleString();
     document.getElementById('price-range').textContent =
       'Range: $' + Math.max(5118, price - 1702).toLocaleString() + ' – $' + Math.min(45400, price + 1702).toLocaleString() + ' (± MAE)';
@@ -764,7 +672,6 @@
       turboAdj > 0 ? '+$2,500' : 'None';
   }
 
-  // Init on load
   updateEstimate();
 </script>
 </body>
