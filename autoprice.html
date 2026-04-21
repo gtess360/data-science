@@ -175,7 +175,7 @@
     <div class="finding-card"><div class="finding-title">Price Distribution</div><div class="finding-text">Price is right-skewed (skewness = 1.63). Most cars are priced between $5,000–$15,000 with a long tail of luxury vehicles up to $45,400.</div></div>
     <div class="finding-card"><div class="finding-title">Missing Values</div><div class="finding-text">normalized-losses had 18% missing values — the highest of any column. Handled via median imputation. Values were stored as '?' requiring special load handling.</div></div>
     <div class="finding-card"><div class="finding-title">Multicollinearity</div><div class="finding-text">city-mpg and highway-mpg were correlated at 0.97 — nearly identical information. city-mpg was dropped, highway-mpg retained.</div></div>
-    <div class="finding-card"><div class="finding-title">Brand Impact</div><div class="finding-text">Make is the strongest categorical predictor. Porsche, Jaguar and Mercedes sit at the top while Chevrolet and Plymouth are at the bottom.</div></div>
+    <div class="finding-card"><div class="finding-title">Feature Selection</div><div class="finding-text">From 25 original features only 5 were selected by the model — engine-size, curb-weight, horsepower, highway-mpg and width. These 5 features explain 92% of price variation, making the model simpler and more accurate.</div></div>
     <div class="finding-card"><div class="finding-title">Engine Size</div><div class="finding-text">Engine size has the strongest positive correlation with price (0.87). Larger engines consistently command higher prices across all makes.</div></div>
     <div class="finding-card"><div class="finding-title">Fuel Efficiency vs Price</div><div class="finding-text">City and highway mpg show negative correlation with price — more expensive cars have lower fuel efficiency due to larger, more powerful engines.</div></div>
   </div>
@@ -349,7 +349,7 @@
 </footer>
 
 <script>
-  const API_URL = 'https://car-price-api-u5s4.onrender.com';
+  const API_URL = 'https://car-price-api.onrender.com/predict';
 
   const makePresets = {
     toyota:          { engine: 120, hp: 95,  weight: 2400, mpg: 32, width: 65 },
