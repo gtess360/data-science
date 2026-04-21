@@ -7,155 +7,58 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d1117;
-    --surface: #161b22;
-    --surface2: #1c2331;
-    --border: #21262d;
-    --accent: #58a6ff;
+    --bg: #0d1117; --surface: #161b22; --surface2: #1c2331;
+    --border: #21262d; --accent: #58a6ff;
     --accent-dim: rgba(88,166,255,0.1);
-    --text: #e6edf3;
-    --muted: #8b949e;
-    --green: #3fb950;
-    --amber: #d29922;
-    --red: #f85149;
+    --text: #e6edf3; --muted: #8b949e;
+    --green: #3fb950; --amber: #d29922; --red: #f85149;
     --radius: 10px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 15px; line-height: 1.7;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; width: 100%; z-index: 100;
-    background: rgba(13,17,23,0.85);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 2.5rem; height: 60px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .nav-logo {
-    font-weight: 500; font-size: 0.88rem;
-    color: var(--muted); text-decoration: none;
-    transition: color 0.15s;
-  }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(13,17,23,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 0 2.5rem; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-weight: 500; font-size: 0.88rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
   .nav-logo:hover { color: var(--text); }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    color: var(--muted); text-decoration: none;
-    font-size: 0.88rem; font-weight: 450; transition: color 0.15s;
-  }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 450; transition: color 0.15s; }
   .nav-links a:hover { color: var(--text); }
-
-  /* PAGE WRAP */
-  .page { max-width: 960px; margin: 0 auto; padding: 0 2.5rem; }
-
-  /* HERO */
-  .project-hero {
-    padding: 7rem 2.5rem 4rem;
-    max-width: 960px; margin: 0 auto;
-  }
-  .breadcrumb {
-    font-size: 0.78rem; color: var(--muted); margin-bottom: 1rem;
-  }
+  .project-hero { padding: 7rem 2.5rem 4rem; max-width: 960px; margin: 0 auto; }
+  .breadcrumb { font-size: 0.78rem; color: var(--muted); margin-bottom: 1rem; }
   .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
   .breadcrumb a:hover { color: var(--text); }
-  .project-badge {
-    display: inline-block;
-    background: var(--accent-dim);
-    color: var(--accent); font-size: 0.7rem; font-weight: 600;
-    padding: 0.2rem 0.7rem; border-radius: 6px;
-    margin-bottom: 1rem; letter-spacing: 0.02em;
-  }
-  .project-hero h1 {
-    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-    font-weight: 700; letter-spacing: -0.04em;
-    margin-bottom: 0.8rem; line-height: 1.15;
-  }
+  .project-badge { display: inline-block; background: var(--accent-dim); color: var(--accent); font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.7rem; border-radius: 6px; margin-bottom: 1rem; letter-spacing: 0.02em; }
+  .project-hero h1 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; letter-spacing: -0.04em; margin-bottom: 0.8rem; line-height: 1.15; }
   .project-hero h1 em { font-style: normal; color: var(--accent); }
   .project-hero p { color: var(--muted); max-width: 580px; margin-bottom: 2rem; font-size: 0.92rem; }
-  .hero-metrics {
-    display: flex; gap: 0; flex-wrap: wrap;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius); width: fit-content;
-    overflow: hidden;
-  }
-  .hm {
-    padding: 1rem 1.5rem; text-align: center;
-    border-right: 1px solid var(--border);
-  }
+  .hero-metrics { display: flex; gap: 0; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); width: fit-content; overflow: hidden; }
+  .hm { padding: 1rem 1.5rem; text-align: center; border-right: 1px solid var(--border); }
   .hm:last-child { border-right: none; }
-  .hm-val {
-    font-size: 1.25rem; font-weight: 700; color: var(--text);
-    letter-spacing: -0.03em; line-height: 1;
-  }
+  .hm-val { font-size: 1.25rem; font-weight: 700; color: var(--text); letter-spacing: -0.03em; line-height: 1; }
   .hm-label { font-size: 0.7rem; color: var(--muted); margin-top: 0.25rem; }
-
-  /* DIVIDER */
   .divider { border: none; border-top: 1px solid var(--border); }
-
-  /* SECTIONS */
   .section-wrap { padding: 4rem 2.5rem; max-width: 960px; margin: 0 auto; }
-  .sec-tag {
-    font-size: 0.72rem; font-weight: 600;
-    color: var(--accent); letter-spacing: 0.1em;
-    text-transform: uppercase; margin-bottom: 0.5rem;
-  }
-  .sec-title {
-    font-size: clamp(1.3rem, 2.2vw, 1.7rem);
-    font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.03em;
-  }
+  .sec-tag { font-size: 0.72rem; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .sec-title { font-size: clamp(1.3rem, 2.2vw, 1.7rem); font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.03em; }
   .sec-sub { color: var(--muted); max-width: 520px; margin-bottom: 2rem; font-size: 0.88rem; }
-
-  /* INFO GRID */
-  .info-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-    gap: 0.75rem; margin-bottom: 2rem;
-  }
-  .info-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 1.1rem;
-  }
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 0.75rem; margin-bottom: 2rem; }
+  .info-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem; }
   .info-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; font-weight: 500; }
   .info-val { font-weight: 600; font-size: 0.9rem; color: var(--text); }
-
-  /* FINDING GRID */
-  .finding-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-    gap: 0.75rem; margin-bottom: 2.5rem;
-  }
-  .finding-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: var(--radius); padding: 1.25rem;
-  }
+  .finding-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 0.75rem; margin-bottom: 2.5rem; }
+  .finding-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 1.25rem; }
   .finding-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.4rem; color: var(--text); }
   .finding-text { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
-
-  /* CORRELATION BARS */
   .corr-list { display: flex; flex-direction: column; gap: 0.6rem; max-width: 560px; }
   .corr-item { display: flex; align-items: center; gap: 0.9rem; }
   .corr-name { font-size: 0.78rem; width: 130px; flex-shrink: 0; font-family: 'DM Mono', monospace; color: var(--muted); }
   .corr-bar-wrap { flex: 1; background: var(--surface2); border-radius: 3px; height: 6px; }
   .corr-bar { height: 100%; border-radius: 3px; background: var(--accent); opacity: 0.7; }
   .corr-val { font-size: 0.75rem; color: var(--accent); width: 36px; text-align: right; font-family: 'DM Mono', monospace; }
-
-  /* TABLE */
   .table-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
   thead tr { border-bottom: 1px solid var(--border); }
-  th {
-    padding: 0.7rem 0.9rem; text-align: left;
-    font-weight: 600; font-size: 0.72rem;
-    color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em;
-  }
+  th { padding: 0.7rem 0.9rem; text-align: left; font-weight: 600; font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
   td { padding: 0.8rem 0.9rem; border-bottom: 1px solid var(--border); color: var(--text); }
   tr:last-child td { border-bottom: none; }
   tr.best-row { background: var(--accent-dim); }
@@ -163,31 +66,12 @@
   .badge-good { color: var(--green); font-weight: 500; }
   .badge-warn { color: var(--amber); font-weight: 500; }
   .badge-bad  { color: var(--red);  font-weight: 500; }
-  .best-tag {
-    display: inline-block;
-    background: var(--accent-dim); color: var(--accent);
-    font-size: 0.65rem; font-weight: 600;
-    padding: 0.1rem 0.45rem; border-radius: 4px;
-    margin-left: 0.4rem; vertical-align: middle;
-  }
-
-  /* METRIC CARDS */
-  .metric-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 0.75rem; margin-bottom: 2rem;
-  }
-  .metric-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 1.25rem;
-  }
-  .metric-card .val {
-    font-size: 1.5rem; font-weight: 700; color: var(--text);
-    letter-spacing: -0.04em; line-height: 1;
-  }
+  .best-tag { display: inline-block; background: var(--accent-dim); color: var(--accent); font-size: 0.65rem; font-weight: 600; padding: 0.1rem 0.45rem; border-radius: 4px; margin-left: 0.4rem; vertical-align: middle; }
+  .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 2rem; }
+  .metric-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+  .metric-card .val { font-size: 1.5rem; font-weight: 700; color: var(--text); letter-spacing: -0.04em; line-height: 1; }
   .metric-card .lbl { font-size: 0.72rem; color: var(--muted); margin-top: 0.3rem; }
   .metric-card .desc { font-size: 0.7rem; color: var(--muted); margin-top: 0.15rem; opacity: 0.75; }
-
-  /* FEATURE IMPORTANCE */
   .feat-list { display: flex; flex-direction: column; gap: 0.5rem; max-width: 560px; }
   .feat-item { display: flex; align-items: center; gap: 0.9rem; }
   .feat-rank { font-weight: 600; font-size: 0.72rem; color: var(--muted); width: 18px; flex-shrink: 0; }
@@ -195,114 +79,52 @@
   .feat-bar-wrap { flex: 1; background: var(--surface2); border-radius: 3px; height: 6px; }
   .feat-bar { height: 100%; border-radius: 3px; background: var(--accent); opacity: 0.75; }
   .feat-val { font-size: 0.75rem; color: var(--accent); width: 44px; text-align: right; font-family: 'DM Mono', monospace; }
-
-  /* PREDICTOR */
-  .predictor-wrap {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 1.5rem; align-items: start;
-  }
-  .predictor-form {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 1.5rem;
-  }
-  .predictor-form h3 { font-weight: 600; margin-bottom: 1.25rem; font-size: 0.95rem; }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
-  .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
-  .form-group.full { grid-column: 1 / -1; }
+  .predictor-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+  .predictor-form { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+  .predictor-form h3 { font-weight: 600; margin-bottom: 0.5rem; font-size: 0.95rem; }
+  .form-note { font-size: 0.72rem; color: var(--muted); margin-bottom: 1.25rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.85rem; }
   .form-group label { font-size: 0.72rem; color: var(--muted); font-weight: 500; letter-spacing: 0.02em; }
-  .form-group select,
-  .form-group input[type=text] {
-    background: var(--surface2); border: 1px solid var(--border);
-    color: var(--text); padding: 0.55rem 0.75rem;
-    border-radius: 7px; font-size: 0.84rem;
-    font-family: 'Inter', sans-serif;
-    outline: none; transition: border-color 0.15s; width: 100%;
-  }
-  .form-group select:focus,
-  .form-group input:focus { border-color: var(--accent); }
+  .form-group select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 0.55rem 0.75rem; border-radius: 7px; font-size: 0.84rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.15s; width: 100%; }
+  .form-group select:focus { border-color: var(--accent); }
   .form-group select option { background: var(--surface2); }
   .slider-val { font-size: 0.75rem; color: var(--accent); font-family: 'DM Mono', monospace; }
-  input[type=range] {
-    -webkit-appearance: none; width: 100%; height: 4px;
-    background: var(--surface2); border-radius: 4px;
-    outline: none; border: none; padding: 0; margin-top: 0.3rem;
-  }
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none; width: 14px; height: 14px;
-    border-radius: 50%; background: var(--accent); cursor: pointer;
-  }
-  .predict-btn {
-    width: 100%; margin-top: 1.25rem;
-    background: var(--accent); color: #0d1117; border: none;
-    padding: 0.7rem; border-radius: 7px;
-    font-size: 0.88rem; font-weight: 600;
-    cursor: pointer; transition: opacity 0.15s, transform 0.15s;
-  }
+  input[type=range] { -webkit-appearance: none; width: 100%; height: 4px; background: var(--surface2); border-radius: 4px; outline: none; border: none; padding: 0; margin-top: 0.3rem; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+  .predict-btn { width: 100%; margin-top: 1.25rem; background: var(--accent); color: #0d1117; border: none; padding: 0.7rem; border-radius: 7px; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: opacity 0.15s, transform 0.15s; }
   .predict-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-
-  /* RESULT */
-  .result-panel {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 1.5rem;
-    display: flex; flex-direction: column; gap: 1.25rem;
-  }
+  .predict-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .api-badge { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; color: var(--muted); margin-bottom: 1rem; }
+  .api-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  .api-dot.loading { background: var(--amber); animation: pulse 1s infinite; }
+  .api-dot.error { background: var(--red); animation: none; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .result-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
   .result-panel h3 { font-weight: 600; font-size: 0.95rem; }
-  .price-display {
-    text-align: center; padding: 1.75rem 1rem;
-    background: var(--surface2);
-    border: 1px solid var(--border); border-radius: 8px;
-  }
+  .price-display { text-align: center; padding: 1.75rem 1rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; }
   .price-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.4rem; font-weight: 500; }
-  .price-value {
-    font-size: 2.4rem; font-weight: 700; color: var(--text);
-    line-height: 1; letter-spacing: -0.05em;
-  }
+  .price-value { font-size: 2.4rem; font-weight: 700; color: var(--text); line-height: 1; letter-spacing: -0.05em; }
   .price-range { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; }
   .result-breakdown { display: flex; flex-direction: column; gap: 0.6rem; }
-  .breakdown-item {
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 0.8rem; padding-bottom: 0.6rem;
-    border-bottom: 1px solid var(--border);
-  }
+  .breakdown-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
   .breakdown-item:last-child { border-bottom: none; padding-bottom: 0; }
   .breakdown-key { color: var(--muted); }
   .breakdown-val { color: var(--text); font-weight: 500; font-family: 'DM Mono', monospace; font-size: 0.75rem; }
-  .breakdown-val.pos { color: var(--green); }
-  .breakdown-val.neg { color: var(--red); }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 1.75rem 2.5rem;
-    max-width: 960px; margin: 0 auto;
-    display: flex; justify-content: space-between; align-items: center;
-    color: var(--muted); font-size: 0.8rem;
-  }
+  footer { border-top: 1px solid var(--border); padding: 1.75rem 2.5rem; max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.8rem; }
   footer a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
   footer a:hover { color: var(--text); }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
   .fade { animation: fadeUp 0.5s ease both; }
-
   @media (max-width: 768px) {
-    nav { padding: 0 1.25rem; }
-    .nav-links { display: none; }
-    .project-hero { padding: 6rem 1.25rem 3rem; }
-    .section-wrap { padding: 3rem 1.25rem; }
-    .predictor-wrap { grid-template-columns: 1fr; }
-    .form-grid { grid-template-columns: 1fr; }
-    .metric-grid { grid-template-columns: 1fr 1fr; }
-    .hero-metrics { flex-wrap: wrap; }
-    footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.4rem; }
+    nav { padding: 0 1.25rem; } .nav-links { display: none; }
+    .project-hero { padding: 6rem 1.25rem 3rem; } .section-wrap { padding: 3rem 1.25rem; }
+    .predictor-wrap { grid-template-columns: 1fr; } .metric-grid { grid-template-columns: 1fr 1fr; }
+    .hero-metrics { flex-wrap: wrap; } footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.4rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="./index.html" class="nav-logo">← Portfolio</a>
   <ul class="nav-links">
@@ -313,7 +135,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <div class="project-hero fade">
   <div class="breadcrumb"><a href="./index.html">Portfolio</a> / Automobile Price Prediction</div>
   <div class="project-badge">Regression · Machine Learning</div>
@@ -330,7 +151,6 @@
 
 <hr class="divider">
 
-<!-- OVERVIEW -->
 <div class="section-wrap" id="about-project">
   <div class="sec-tag">Overview</div>
   <h2 class="sec-title">About the Project</h2>
@@ -347,39 +167,18 @@
 
 <hr class="divider">
 
-<!-- EDA -->
 <div class="section-wrap" id="eda">
   <div class="sec-tag">Task 1</div>
   <h2 class="sec-title">EDA Findings</h2>
   <p class="sec-sub">Key insights discovered during exploratory data analysis across 25 independent variables.</p>
-
   <div class="finding-grid">
-    <div class="finding-card">
-      <div class="finding-title">Price Distribution</div>
-      <div class="finding-text">Price is right-skewed (skewness = 1.63). Most cars are priced between $5,000–$15,000 with a long tail of luxury vehicles up to $45,400.</div>
-    </div>
-    <div class="finding-card">
-      <div class="finding-title">Missing Values</div>
-      <div class="finding-text">normalized-losses had 18% missing values — the highest of any column. Handled via median imputation. Values were stored as '?' requiring special load handling.</div>
-    </div>
-    <div class="finding-card">
-      <div class="finding-title">Multicollinearity</div>
-      <div class="finding-text">city-mpg and highway-mpg were correlated at 0.97 — nearly identical information. city-mpg was dropped, highway-mpg retained.</div>
-    </div>
-    <div class="finding-card">
-      <div class="finding-title">Brand Impact</div>
-      <div class="finding-text">Make is the strongest categorical predictor. Porsche, Jaguar and Mercedes sit at the top while Chevrolet and Plymouth are at the bottom.</div>
-    </div>
-    <div class="finding-card">
-      <div class="finding-title">Engine Size</div>
-      <div class="finding-text">Engine size has the strongest positive correlation with price (0.87). Larger engines consistently command higher prices across all makes.</div>
-    </div>
-    <div class="finding-card">
-      <div class="finding-title">Fuel Efficiency vs Price</div>
-      <div class="finding-text">City and highway mpg show negative correlation with price — more expensive cars have lower fuel efficiency due to larger, more powerful engines.</div>
-    </div>
+    <div class="finding-card"><div class="finding-title">Price Distribution</div><div class="finding-text">Price is right-skewed (skewness = 1.63). Most cars are priced between $5,000–$15,000 with a long tail of luxury vehicles up to $45,400.</div></div>
+    <div class="finding-card"><div class="finding-title">Missing Values</div><div class="finding-text">normalized-losses had 18% missing values — the highest of any column. Handled via median imputation. Values were stored as '?' requiring special load handling.</div></div>
+    <div class="finding-card"><div class="finding-title">Multicollinearity</div><div class="finding-text">city-mpg and highway-mpg were correlated at 0.97 — nearly identical information. city-mpg was dropped, highway-mpg retained.</div></div>
+    <div class="finding-card"><div class="finding-title">Brand Impact</div><div class="finding-text">Make is the strongest categorical predictor. Porsche, Jaguar and Mercedes sit at the top while Chevrolet and Plymouth are at the bottom.</div></div>
+    <div class="finding-card"><div class="finding-title">Engine Size</div><div class="finding-text">Engine size has the strongest positive correlation with price (0.87). Larger engines consistently command higher prices across all makes.</div></div>
+    <div class="finding-card"><div class="finding-title">Fuel Efficiency vs Price</div><div class="finding-text">City and highway mpg show negative correlation with price — more expensive cars have lower fuel efficiency due to larger, more powerful engines.</div></div>
   </div>
-
   <h3 style="font-weight:600; margin-bottom:1rem; font-size:0.9rem; color:var(--text);">Top Feature Correlations with Price</h3>
   <div class="corr-list">
     <div class="corr-item"><div class="corr-name">engine-size</div><div class="corr-bar-wrap"><div class="corr-bar" style="width:87%"></div></div><div class="corr-val">0.87</div></div>
@@ -394,98 +193,29 @@
 
 <hr class="divider">
 
-<!-- MODELS -->
 <div class="section-wrap" id="models">
   <div class="sec-tag">Task 2</div>
   <h2 class="sec-title">Model Comparison</h2>
   <p class="sec-sub">Six regression models were trained and evaluated. Random Forest was selected for production based on all metrics.</p>
-
   <div class="metric-grid">
     <div class="metric-card"><div class="val">0.9462</div><div class="lbl">Best R² Test</div><div class="desc">Random Forest</div></div>
     <div class="metric-card"><div class="val">$2,564</div><div class="lbl">Lowest RMSE</div><div class="desc">Random Forest</div></div>
     <div class="metric-card"><div class="val">$1,702</div><div class="lbl">Lowest MAE</div><div class="desc">Random Forest</div></div>
     <div class="metric-card"><div class="val">0.038</div><div class="lbl">Smallest Gap</div><div class="desc">Least overfit</div></div>
   </div>
-
   <div class="table-wrap">
     <table>
-      <thead>
-        <tr>
-          <th>Model</th>
-          <th>R² Train</th>
-          <th>R² Test</th>
-          <th>Gap</th>
-          <th>RMSE</th>
-          <th>MAE</th>
-          <th>CV R²</th>
-          <th>Verdict</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Model</th><th>R² Train</th><th>R² Test</th><th>Gap</th><th>RMSE</th><th>MAE</th><th>CV R²</th><th>Verdict</th></tr></thead>
       <tbody>
-        <tr class="best-row">
-          <td>Random Forest <span class="best-tag">BEST</span></td>
-          <td>0.9840</td>
-          <td class="badge-good">0.9462</td>
-          <td class="badge-good">0.038</td>
-          <td class="badge-good">$2,564</td>
-          <td class="badge-good">$1,702</td>
-          <td>0.334</td>
-          <td class="badge-good">✓ Production</td>
-        </tr>
-        <tr>
-          <td>Gradient Boosting</td>
-          <td>0.9887</td>
-          <td>0.9374</td>
-          <td class="badge-good">0.051</td>
-          <td>$2,767</td>
-          <td>$1,727</td>
-          <td class="badge-good">0.482</td>
-          <td class="badge-warn">~ Second</td>
-        </tr>
-        <tr>
-          <td>Decision Tree</td>
-          <td>0.9990</td>
-          <td>0.9177</td>
-          <td class="badge-bad">0.081</td>
-          <td>$3,173</td>
-          <td>$2,120</td>
-          <td>0.416</td>
-          <td class="badge-bad">✗ Overfit</td>
-        </tr>
-        <tr>
-          <td>Lasso</td>
-          <td>0.9531</td>
-          <td>0.9104</td>
-          <td>0.042</td>
-          <td>$3,310</td>
-          <td>$2,057</td>
-          <td>0.275</td>
-          <td class="badge-warn">~ Acceptable</td>
-        </tr>
-        <tr>
-          <td>Linear Regression</td>
-          <td>0.9535</td>
-          <td>0.9078</td>
-          <td>0.045</td>
-          <td>$3,359</td>
-          <td>$2,068</td>
-          <td>0.187</td>
-          <td class="badge-warn">~ Acceptable</td>
-        </tr>
-        <tr>
-          <td>Ridge</td>
-          <td>0.9407</td>
-          <td class="badge-bad">0.8987</td>
-          <td>0.041</td>
-          <td class="badge-bad">$3,520</td>
-          <td class="badge-bad">$2,256</td>
-          <td>0.334</td>
-          <td class="badge-bad">✗ Weakest</td>
-        </tr>
+        <tr class="best-row"><td>Random Forest <span class="best-tag">BEST</span></td><td>0.9840</td><td class="badge-good">0.9462</td><td class="badge-good">0.038</td><td class="badge-good">$2,564</td><td class="badge-good">$1,702</td><td>0.334</td><td class="badge-good">✓ Production</td></tr>
+        <tr><td>Gradient Boosting</td><td>0.9887</td><td>0.9374</td><td class="badge-good">0.051</td><td>$2,767</td><td>$1,727</td><td class="badge-good">0.482</td><td class="badge-warn">~ Second</td></tr>
+        <tr><td>Decision Tree</td><td>0.9990</td><td>0.9177</td><td class="badge-bad">0.081</td><td>$3,173</td><td>$2,120</td><td>0.416</td><td class="badge-bad">✗ Overfit</td></tr>
+        <tr><td>Lasso</td><td>0.9531</td><td>0.9104</td><td>0.042</td><td>$3,310</td><td>$2,057</td><td>0.275</td><td class="badge-warn">~ Acceptable</td></tr>
+        <tr><td>Linear Regression</td><td>0.9535</td><td>0.9078</td><td>0.045</td><td>$3,359</td><td>$2,068</td><td>0.187</td><td class="badge-warn">~ Acceptable</td></tr>
+        <tr><td>Ridge</td><td>0.9407</td><td class="badge-bad">0.8987</td><td>0.041</td><td class="badge-bad">$3,520</td><td class="badge-bad">$2,256</td><td>0.334</td><td class="badge-bad">✗ Weakest</td></tr>
       </tbody>
     </table>
   </div>
-
   <div style="margin-top:2.5rem">
     <h3 style="font-weight:600; margin-bottom:0.4rem; font-size:0.9rem;">Top Features Affecting Price</h3>
     <p style="font-size:0.8rem; color:var(--muted); margin-bottom:1.25rem">Identified by Random Forest feature importance scoring</p>
@@ -508,171 +238,226 @@
 <div class="section-wrap" id="predictor">
   <div class="sec-tag">Live Demo</div>
   <h2 class="sec-title">Price Predictor</h2>
-  <p class="sec-sub">Enter car specifications to get an estimated price based on the Random Forest model's learned patterns.</p>
+  <p class="sec-sub">Select a car make to auto-fill typical specifications, adjust the sliders if needed, then click Predict. Powered by the trained Random Forest model.</p>
 
   <div class="predictor-wrap">
     <div class="predictor-form">
       <h3>Car Specifications</h3>
-      <div class="form-grid">
+      <p class="form-note">Selecting a make auto-fills typical specs. The prediction is based on the 5 sliders only — make is a UX helper.</p>
 
-        <div class="form-group">
-          <label>Make Segment</label>
-          <select id="make" onchange="updateEstimate()">
-            <option value="budget">Budget (Chevrolet, Honda)</option>
-            <option value="midrange" selected>Mid-range (Toyota, Nissan)</option>
-            <option value="premium">Premium (BMW, Audi)</option>
-            <option value="luxury">Luxury (Porsche, Jaguar)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Body Style</label>
-          <select id="body" onchange="updateEstimate()">
-            <option value="hatchback">Hatchback</option>
-            <option value="sedan" selected>Sedan</option>
-            <option value="wagon">Wagon</option>
-            <option value="hardtop">Hardtop</option>
-            <option value="convertible">Convertible</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Fuel Type</label>
-          <select id="fuel" onchange="updateEstimate()">
-            <option value="gas" selected>Gas</option>
-            <option value="diesel">Diesel</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Aspiration</label>
-          <select id="aspiration" onchange="updateEstimate()">
-            <option value="std" selected>Standard</option>
-            <option value="turbo">Turbo</option>
-          </select>
-        </div>
-
-        <div class="form-group full">
-          <label>Engine Size (cc) — <span class="slider-val" id="engine-val">130</span></label>
-          <input type="range" id="engine" min="61" max="326" value="130" oninput="document.getElementById('engine-val').textContent=this.value; updateEstimate()">
-        </div>
-
-        <div class="form-group full">
-          <label>Horsepower — <span class="slider-val" id="hp-val">100</span> HP</label>
-          <input type="range" id="hp" min="48" max="288" value="100" oninput="document.getElementById('hp-val').textContent=this.value; updateEstimate()">
-        </div>
-
-        <div class="form-group full">
-          <label>Curb Weight (lbs) — <span class="slider-val" id="weight-val">2500</span></label>
-          <input type="range" id="weight" min="1488" max="4066" value="2500" oninput="document.getElementById('weight-val').textContent=this.value; updateEstimate()">
-        </div>
-
-        <div class="form-group full">
-          <label>Highway MPG — <span class="slider-val" id="mpg-val">30</span></label>
-          <input type="range" id="mpg" min="16" max="54" value="30" oninput="document.getElementById('mpg-val').textContent=this.value; updateEstimate()">
-        </div>
-
+      <div class="api-badge">
+        <div class="api-dot" id="api-dot"></div>
+        <span id="api-status">Model ready</span>
       </div>
-      <button class="predict-btn" onclick="updateEstimate()">Estimate Price</button>
+
+      <div class="form-group">
+        <label>Car Make — auto-fills typical specifications</label>
+        <select id="make" onchange="onMakeChange()">
+          <option value="toyota">Toyota</option>
+          <option value="nissan">Nissan</option>
+          <option value="mazda">Mazda</option>
+          <option value="honda">Honda</option>
+          <option value="mitsubishi">Mitsubishi</option>
+          <option value="volkswagen">Volkswagen</option>
+          <option value="subaru">Subaru</option>
+          <option value="volvo">Volvo</option>
+          <option value="audi">Audi</option>
+          <option value="bmw">BMW</option>
+          <option value="saab">Saab</option>
+          <option value="peugot">Peugeot</option>
+          <option value="mercedes-benz">Mercedes-Benz</option>
+          <option value="jaguar">Jaguar</option>
+          <option value="porsche">Porsche</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Engine Size (cc) — <span class="slider-val" id="engine-val">120</span></label>
+        <input type="range" id="engine" min="61" max="326" value="120" step="1" oninput="document.getElementById('engine-val').textContent=this.value;">
+      </div>
+
+      <div class="form-group">
+        <label>Horsepower — <span class="slider-val" id="hp-val">95</span> HP</label>
+        <input type="range" id="hp" min="48" max="288" value="95" step="1" oninput="document.getElementById('hp-val').textContent=this.value;">
+      </div>
+
+      <div class="form-group">
+        <label>Curb Weight (lbs) — <span class="slider-val" id="weight-val">2400</span></label>
+        <input type="range" id="weight" min="1488" max="4066" value="2400" step="1" oninput="document.getElementById('weight-val').textContent=this.value;">
+      </div>
+
+      <div class="form-group">
+        <label>Highway MPG — <span class="slider-val" id="mpg-val">32</span></label>
+        <input type="range" id="mpg" min="16" max="54" value="32" step="1" oninput="document.getElementById('mpg-val').textContent=this.value;">
+      </div>
+
+      <div class="form-group">
+        <label>Width (inches) — <span class="slider-val" id="width-val">65</span></label>
+        <input type="range" id="width" min="60" max="72" value="65" step="1" oninput="document.getElementById('width-val').textContent=this.value;">
+      </div>
+
+      <button class="predict-btn" id="predict-btn" onclick="predictPrice()">Predict Price</button>
     </div>
 
     <div class="result-panel">
-      <h3>Price Estimate</h3>
+      <h3>Prediction Result</h3>
       <div class="price-display">
-        <div class="price-label">Estimated Market Price</div>
-        <div class="price-value" id="price-output">$0</div>
-        <div class="price-range" id="price-range">—</div>
+        <div class="price-label">Predicted Market Price</div>
+        <div class="price-value" id="price-output">—</div>
+        <div class="price-range" id="price-range">Click Predict Price to get result</div>
       </div>
-      <div class="result-breakdown" id="breakdown">
+      <div class="result-breakdown">
         <div class="breakdown-item">
-          <span class="breakdown-key">Model accuracy</span>
-          <span class="breakdown-val">R² = 0.9462</span>
+          <span class="breakdown-key">Model</span>
+          <span class="breakdown-val">Random Forest</span>
         </div>
         <div class="breakdown-item">
-          <span class="breakdown-key">Average error (MAE)</span>
+          <span class="breakdown-key">R² accuracy</span>
+          <span class="breakdown-val">0.9475</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-key">Avg error (MAE)</span>
           <span class="breakdown-val">± $1,702</span>
         </div>
-        <div class="breakdown-item" id="bd-make">
-          <span class="breakdown-key">Make segment</span>
-          <span class="breakdown-val">—</span>
+        <div class="breakdown-item">
+          <span class="breakdown-key">Selected make</span>
+          <span class="breakdown-val" id="bd-make">Toyota</span>
         </div>
-        <div class="breakdown-item" id="bd-engine">
-          <span class="breakdown-key">Engine size effect</span>
-          <span class="breakdown-val pos">—</span>
+        <div class="breakdown-item">
+          <span class="breakdown-key">Engine size</span>
+          <span class="breakdown-val" id="bd-engine">—</span>
         </div>
-        <div class="breakdown-item" id="bd-hp">
-          <span class="breakdown-key">Horsepower effect</span>
-          <span class="breakdown-val pos">—</span>
+        <div class="breakdown-item">
+          <span class="breakdown-key">Horsepower</span>
+          <span class="breakdown-val" id="bd-hp">—</span>
         </div>
-        <div class="breakdown-item" id="bd-turbo">
-          <span class="breakdown-key">Turbo premium</span>
-          <span class="breakdown-val">—</span>
+        <div class="breakdown-item">
+          <span class="breakdown-key">Curb weight</span>
+          <span class="breakdown-val" id="bd-weight">—</span>
         </div>
       </div>
       <p style="font-size:0.72rem; color:var(--muted); border-top:1px solid var(--border); padding-top:0.9rem; line-height:1.6;">
-        Heuristic estimate based on feature importance patterns learned by the Random Forest model. For production use, integrate the trained model via API.
+        Prediction powered by a Random Forest model trained on the UCI Automobile dataset. Make selection auto-fills typical specifications — the 5 sliders are the actual model inputs.
       </p>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div>Auto Price Prediction · Data Science Capstone</div>
   <div><a href="./index.html">← Back to Portfolio</a></div>
 </footer>
 
 <script>
-  function updateEstimate() {
+  const API_URL = 'https://car-price-api-u5s4.onrender.com';
+
+  const makePresets = {
+    toyota:          { engine: 120, hp: 95,  weight: 2400, mpg: 32, width: 65 },
+    nissan:          { engine: 120, hp: 97,  weight: 2350, mpg: 31, width: 65 },
+    mazda:           { engine: 110, hp: 88,  weight: 2200, mpg: 33, width: 64 },
+    honda:           { engine: 100, hp: 80,  weight: 2100, mpg: 35, width: 64 },
+    mitsubishi:      { engine: 122, hp: 88,  weight: 2350, mpg: 30, width: 65 },
+    volkswagen:      { engine: 109, hp: 90,  weight: 2250, mpg: 32, width: 65 },
+    subaru:          { engine: 108, hp: 82,  weight: 2520, mpg: 30, width: 65 },
+    volvo:           { engine: 141, hp: 114, weight: 2900, mpg: 28, width: 67 },
+    audi:            { engine: 136, hp: 115, weight: 2980, mpg: 25, width: 67 },
+    bmw:             { engine: 164, hp: 182, weight: 3200, mpg: 24, width: 67 },
+    saab:            { engine: 121, hp: 110, weight: 2800, mpg: 26, width: 66 },
+    peugot:          { engine: 120, hp: 97,  weight: 2510, mpg: 29, width: 65 },
+    'mercedes-benz': { engine: 196, hp: 123, weight: 3525, mpg: 22, width: 68 },
+    jaguar:          { engine: 258, hp: 176, weight: 3950, mpg: 19, width: 69 },
+    porsche:         { engine: 203, hp: 207, weight: 3220, mpg: 17, width: 70 }
+  };
+
+  const makeLabels = {
+    toyota: 'Toyota', nissan: 'Nissan', mazda: 'Mazda',
+    honda: 'Honda', mitsubishi: 'Mitsubishi', volkswagen: 'Volkswagen',
+    subaru: 'Subaru', volvo: 'Volvo', audi: 'Audi', bmw: 'BMW',
+    saab: 'Saab', peugot: 'Peugeot', 'mercedes-benz': 'Mercedes-Benz',
+    jaguar: 'Jaguar', porsche: 'Porsche'
+  };
+
+  function onMakeChange() {
+    const make = document.getElementById('make').value;
+    const p = makePresets[make];
+    if (!p) return;
+    document.getElementById('engine').value  = p.engine;
+    document.getElementById('hp').value      = p.hp;
+    document.getElementById('weight').value  = p.weight;
+    document.getElementById('mpg').value     = p.mpg;
+    document.getElementById('width').value   = p.width;
+    document.getElementById('engine-val').textContent = p.engine;
+    document.getElementById('hp-val').textContent     = p.hp;
+    document.getElementById('weight-val').textContent = p.weight;
+    document.getElementById('mpg-val').textContent    = p.mpg;
+    document.getElementById('width-val').textContent  = p.width;
+    document.getElementById('bd-make').textContent = makeLabels[make];
+  }
+
+  async function predictPrice() {
     const make   = document.getElementById('make').value;
-    const body   = document.getElementById('body').value;
-    const fuel   = document.getElementById('fuel').value;
-    const asp    = document.getElementById('aspiration').value;
     const engine = parseInt(document.getElementById('engine').value);
     const hp     = parseInt(document.getElementById('hp').value);
     const weight = parseInt(document.getElementById('weight').value);
     const mpg    = parseInt(document.getElementById('mpg').value);
+    const width  = parseInt(document.getElementById('width').value);
 
-    const makeBases  = { budget: 7000, midrange: 12000, premium: 22000, luxury: 35000 };
-    const makeLabels = { budget: 'Budget', midrange: 'Mid-range', premium: 'Premium', luxury: 'Luxury' };
-    let price = makeBases[make];
+    document.getElementById('bd-make').textContent   = makeLabels[make];
+    document.getElementById('bd-engine').textContent = engine + ' cc';
+    document.getElementById('bd-hp').textContent     = hp + ' HP';
+    document.getElementById('bd-weight').textContent = weight.toLocaleString() + ' lbs';
 
-    const engineEffect = ((engine - 130) / 196) * 8000;
-    price += engineEffect;
+    const btn    = document.getElementById('predict-btn');
+    const dot    = document.getElementById('api-dot');
+    const status = document.getElementById('api-status');
 
-    const hpEffect = ((hp - 100) / 188) * 5000;
-    price += hpEffect;
+    btn.disabled = true;
+    btn.textContent = 'Predicting...';
+    dot.className = 'api-dot loading';
+    status.textContent = 'Calling model...';
+    document.getElementById('price-output').textContent = '...';
+    document.getElementById('price-range').textContent = '';
 
-    const weightEffect = ((weight - 2500) / 2578) * 4000;
-    price += weightEffect;
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          curb_weight : weight,
+          engine_size : engine,
+          horsepower  : hp,
+          highway_mpg : mpg,
+          width       : width
+        })
+      });
 
-    const mpgEffect = ((30 - mpg) / 38) * 1500;
-    price += mpgEffect;
+      const data = await response.json();
 
-    const bodyAdj = { hatchback: -500, sedan: 0, wagon: 300, hardtop: 800, convertible: 2500 };
-    price += bodyAdj[body] || 0;
+      if (data.predicted_price) {
+        const price = Math.round(data.predicted_price);
+        document.getElementById('price-output').textContent = '$' + price.toLocaleString();
+        document.getElementById('price-range').textContent =
+          'Range: $' + Math.max(5118, price - 1702).toLocaleString() +
+          ' – $' + Math.min(45400, price + 1702).toLocaleString() + ' (± MAE)';
+        dot.className = 'api-dot';
+        status.textContent = 'Model ready';
+      } else {
+        throw new Error(data.error || 'Unknown error');
+      }
 
-    const turboAdj = asp === 'turbo' ? 2500 : 0;
-    price += turboAdj;
+    } catch (error) {
+      document.getElementById('price-output').textContent = 'Error';
+      document.getElementById('price-range').textContent = 'Could not reach model — try again in 30 seconds';
+      dot.className = 'api-dot error';
+      status.textContent = 'API unreachable (may be waking up)';
+      console.error('API error:', error);
+    }
 
-    if (fuel === 'diesel') price += 800;
-
-    price = Math.max(5118, Math.min(45400, Math.round(price)));
-
-    document.getElementById('price-output').textContent = '$' + price.toLocaleString();
-    document.getElementById('price-range').textContent =
-      'Range: $' + Math.max(5118, price - 1702).toLocaleString() + ' – $' + Math.min(45400, price + 1702).toLocaleString() + ' (± MAE)';
-
-    document.getElementById('bd-make').querySelector('.breakdown-val').textContent = makeLabels[make];
-    document.getElementById('bd-engine').querySelector('.breakdown-val').textContent =
-      (engineEffect >= 0 ? '+' : '') + '$' + Math.round(engineEffect).toLocaleString();
-    document.getElementById('bd-hp').querySelector('.breakdown-val').textContent =
-      (hpEffect >= 0 ? '+' : '') + '$' + Math.round(hpEffect).toLocaleString();
-    document.getElementById('bd-turbo').querySelector('.breakdown-val').textContent =
-      turboAdj > 0 ? '+$2,500' : 'None';
+    btn.disabled = false;
+    btn.textContent = 'Predict Price';
   }
 
-  updateEstimate();
+  onMakeChange();
 </script>
 </body>
 </html>
