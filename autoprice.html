@@ -257,27 +257,27 @@
 
       <div class="form-group">
         <label>Engine Size (cc) — <span class="slider-val" id="engine-val">120</span></label>
-        <input type="range" id="engine" min="61" max="326" value="120" step="1" oninput="document.getElementById('engine-val').textContent=this.value;">
+        <input type="range" id="engine" min="61" max="326" value="120" step="1" oninput="document.getElementById('engine-val').textContent=this.value; predictPrice();">
       </div>
 
       <div class="form-group">
         <label>Horsepower — <span class="slider-val" id="hp-val">95</span> HP</label>
-        <input type="range" id="hp" min="48" max="288" value="95" step="1" oninput="document.getElementById('hp-val').textContent=this.value;">
+        <input type="range" id="hp" min="48" max="288" value="95" step="1" oninput="document.getElementById('hp-val').textContent=this.value; predictPrice();">
       </div>
 
       <div class="form-group">
         <label>Curb Weight (lbs) — <span class="slider-val" id="weight-val">2400</span></label>
-        <input type="range" id="weight" min="1488" max="4066" value="2400" step="1" oninput="document.getElementById('weight-val').textContent=this.value;">
+        <input type="range" id="weight" min="1488" max="4066" value="2400" step="1" oninput="document.getElementById('weight-val').textContent=this.value; predictPrice();">
       </div>
 
       <div class="form-group">
         <label>Highway MPG — <span class="slider-val" id="mpg-val">32</span></label>
-        <input type="range" id="mpg" min="16" max="54" value="32" step="1" oninput="document.getElementById('mpg-val').textContent=this.value;">
+        <input type="range" id="mpg" min="16" max="54" value="32" step="1" oninput="document.getElementById('mpg-val').textContent=this.value; predictPrice();">
       </div>
 
       <div class="form-group">
         <label>Width (inches) — <span class="slider-val" id="width-val">65</span></label>
-        <input type="range" id="width" min="60" max="72" value="65" step="1" oninput="document.getElementById('width-val').textContent=this.value;">
+        <input type="range" id="width" min="60" max="72" value="65" step="1" oninput="document.getElementById('width-val').textContent=this.value; predictPrice();">
       </div>
 
       <button class="predict-btn" onclick="predictPrice()">Predict Price</button>
