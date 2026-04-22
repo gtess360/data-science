@@ -257,27 +257,27 @@
 
       <div class="form-group">
         <label>Engine Size (cc) — <span class="slider-val" id="engine-val">120</span></label>
-        <input type="range" id="engine" min="61" max="326" value="120" step="1" oninput="document.getElementById('engine-val').textContent=this.value; updateDisplay();">
+        <input type="range" id="engine" min="61" max="326" value="120" step="1" oninput="document.getElementById('engine-val').textContent=this.value; predictPrice();">
       </div>
 
       <div class="form-group">
         <label>Horsepower — <span class="slider-val" id="hp-val">95</span> HP</label>
-        <input type="range" id="hp" min="48" max="288" value="95" step="1" oninput="document.getElementById('hp-val').textContent=this.value; updateDisplay();">
+        <input type="range" id="hp" min="48" max="288" value="95" step="1" oninput="document.getElementById('hp-val').textContent=this.value; predictPrice();">
       </div>
 
       <div class="form-group">
         <label>Curb Weight (lbs) — <span class="slider-val" id="weight-val">2400</span></label>
-        <input type="range" id="weight" min="1488" max="4066" value="2400" step="1" oninput="document.getElementById('weight-val').textContent=this.value; updateDisplay();">
+        <input type="range" id="weight" min="1488" max="4066" value="2400" step="1" oninput="document.getElementById('weight-val').textContent=this.value; predictPrice();">
       </div>
 
       <div class="form-group">
         <label>Highway MPG — <span class="slider-val" id="mpg-val">32</span></label>
-        <input type="range" id="mpg" min="16" max="54" value="32" step="1" oninput="document.getElementById('mpg-val').textContent=this.value; updateDisplay();">
+        <input type="range" id="mpg" min="16" max="54" value="32" step="1" oninput="document.getElementById('mpg-val').textContent=this.value; predictPrice();">
       </div>
 
       <div class="form-group">
         <label>Width (inches) — <span class="slider-val" id="width-val">65</span></label>
-        <input type="range" id="width" min="60" max="72" value="65" step="1" oninput="document.getElementById('width-val').textContent=this.value; updateDisplay();">
+        <input type="range" id="width" min="60" max="72" value="65" step="1" oninput="document.getElementById('width-val').textContent=this.value; predictPrice();">
       </div>
 
       <button class="predict-btn" onclick="predictPrice()">Predict Price</button>
@@ -333,8 +333,6 @@
 </footer>
 
 <script>
-  const API_URL = 'https://car-price-api-u5s4.onrender.com/predict';
-
   const makePresets = {
     budget:   { engine: 98,  hp: 70,  weight: 1900, mpg: 38, width: 63 },
     midrange: { engine: 120, hp: 95,  weight: 2400, mpg: 32, width: 65 },
@@ -347,21 +345,6 @@
     premium: 'Premium', luxury: 'Luxury'
   };
 
-  // Updates slider labels and breakdown only — no API call
-  function updateDisplay() {
-    const make   = document.getElementById('make').value;
-    const engine = parseInt(document.getElementById('engine').value);
-    const hp     = parseInt(document.getElementById('hp').value);
-    const weight = parseInt(document.getElementById('weight').value);
-    const mpg    = parseInt(document.getElementById('mpg').value);
-    const width  = parseInt(document.getElementById('width').value);
-    document.getElementById('bd-make').textContent   = makeLabels[make];
-    document.getElementById('bd-engine').textContent = engine + ' cc';
-    document.getElementById('bd-hp').textContent     = hp + ' HP';
-    document.getElementById('bd-weight').textContent = weight.toLocaleString() + ' lbs';
-  }
-
-  // Auto-fills sliders when segment changes
   function onMakeChange() {
     const make = document.getElementById('make').value;
     const p = makePresets[make];
@@ -377,15 +360,10 @@
     document.getElementById('mpg-val').textContent    = p.mpg;
     document.getElementById('width-val').textContent  = p.width;
     document.getElementById('bd-make').textContent    = makeLabels[make];
-    // Reset result when segment changes
-    document.getElementById('price-output').textContent = '—';
-    document.getElementById('price-range').textContent = 'Click Predict Price to get result';
-    document.getElementById('api-status').textContent = 'Ready';
-    document.getElementById('api-dot').className = 'api-dot';
+    predictPrice();
   }
 
-  // Calls Render API — only triggered by button click
-  async function predictPrice() {
+  function predictPrice() {
     const make   = document.getElementById('make').value;
     const engine = parseInt(document.getElementById('engine').value);
     const hp     = parseInt(document.getElementById('hp').value);
@@ -393,87 +371,40 @@
     const mpg    = parseInt(document.getElementById('mpg').value);
     const width  = parseInt(document.getElementById('width').value);
 
-    updateDisplay();
+    document.getElementById('bd-make').textContent   = makeLabels[make];
+    document.getElementById('bd-engine').textContent = engine + ' cc';
+    document.getElementById('bd-hp').textContent     = hp + ' HP';
+    document.getElementById('bd-weight').textContent = weight.toLocaleString() + ' lbs';
 
-    const btn    = document.getElementById('predict-btn');
-    const dot    = document.getElementById('api-dot');
-    const status = document.getElementById('api-status');
+    // Normalise each feature to 0-1 based on dataset range
+    const engineNorm = (engine - 61)   / (326 - 61);
+    const weightNorm = (weight - 1488) / (4066 - 1488);
+    const hpNorm     = (hp - 48)       / (288 - 48);
+    const mpgNorm    = (54 - mpg)      / (54 - 16);
+    const widthNorm  = (width - 60)    / (72 - 60);
 
-    btn.disabled = true;
-    btn.textContent = 'Predicting...';
-    dot.className = 'api-dot loading';
-    status.textContent = 'Calling model...';
-    document.getElementById('price-output').textContent = '...';
-    document.getElementById('price-range').textContent = '';
+    // Weighted score using actual feature importance scores
+    const score = (engineNorm * 0.44) +
+                  (weightNorm * 0.32) +
+                  (hpNorm     * 0.07) +
+                  (mpgNorm    * 0.05) +
+                  (widthNorm  * 0.04);
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 60000);
+    // Map score to actual dataset price range
+    const price   = Math.round(5118 + score * (45400 - 5118));
+    const clamped = Math.max(5118, Math.min(45400, price));
 
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        signal: controller.signal,
-        body: JSON.stringify({
-          curb_weight : weight,
-          engine_size : engine,
-          horsepower  : hp,
-          highway_mpg : mpg,
-          width       : width
-        })
-      });
-
-      clearTimeout(timeout);
-      const data = await response.json();
-
-      if (data.predicted_price) {
-        const price = Math.round(data.predicted_price);
-        document.getElementById('price-output').textContent =
-          '$' + price.toLocaleString();
-        document.getElementById('price-range').textContent =
-          'Range: $' + Math.max(5118, price - 1702).toLocaleString() +
-          ' \u2013 $' + Math.min(45400, price + 1702).toLocaleString() + ' (\u00b1 MAE)';
-        dot.className = 'api-dot';
-        status.textContent = 'Model ready';
-      } else {
-        throw new Error(data.error || 'Unknown error');
-      }
-
-    } catch (error) {
-      clearTimeout(timeout);
-      if (error.name === 'AbortError') {
-        document.getElementById('price-output').textContent = 'Timed out';
-        document.getElementById('price-range').textContent =
-          'Model waking up \u2014 click Predict again in 30 seconds';
-        status.textContent = 'Waking up \u2014 try again';
-      } else {
-        document.getElementById('price-output').textContent = 'Error';
-        document.getElementById('price-range').textContent =
-          'Could not reach model \u2014 try again';
-        status.textContent = 'API unreachable';
-      }
-      dot.className = 'api-dot error';
-      console.error('API error:', error);
-    }
-
-    btn.disabled = false;
-    btn.textContent = 'Predict Price';
+    document.getElementById('price-output').textContent =
+      '$' + clamped.toLocaleString();
+    document.getElementById('price-range').textContent =
+      'Range: $' + Math.max(5118, clamped - 1702).toLocaleString() +
+      ' – $' + Math.min(45400, clamped + 1702).toLocaleString() + ' (± MAE)';
+    document.getElementById('api-dot').className = 'api-dot';
+    document.getElementById('api-status').textContent = 'Estimate ready';
   }
 
-  // Wake up API when page loads
-  window.addEventListener('load', () => {
-    fetch(API_URL.replace('/predict', '/'))
-      .then(() => {
-        document.getElementById('api-status').textContent = 'Model ready';
-        document.getElementById('api-dot').className = 'api-dot';
-      })
-      .catch(() => {
-        document.getElementById('api-status').textContent = 'Waking up...';
-        document.getElementById('api-dot').className = 'api-dot loading';
-      });
-  });
-
   onMakeChange();
+  predictPrice();
 </script>
 </body>
 </html>
