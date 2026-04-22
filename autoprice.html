@@ -374,15 +374,21 @@
   }
 
     // Segment change — only fills sliders, resets price
+  function setSlider(id, val) {
+    const el = document.getElementById(id);
+    el.value = val;
+    el.dispatchEvent(new Event('input'));
+  }
+
   function onMakeChange() {
     const make = document.getElementById('make').value;
     const p = makePresets[make];
     if (!p) return;
-    document.getElementById('engine').value  = p.engine;
-    document.getElementById('hp').value      = p.hp;
-    document.getElementById('weight').value  = p.weight;
-    document.getElementById('mpg').value     = p.mpg;
-    document.getElementById('width').value   = p.width;
+    setSlider('engine', p.engine);
+    setSlider('hp',     p.hp);
+    setSlider('weight', p.weight);
+    setSlider('mpg',    p.mpg);
+    setSlider('width',  p.width);
     document.getElementById('engine-val').textContent = p.engine;
     document.getElementById('hp-val').textContent     = p.hp;
     document.getElementById('weight-val').textContent = p.weight;
