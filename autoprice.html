@@ -257,27 +257,27 @@
 
       <div class="form-group">
         <label>Engine Size (cc) — <span class="slider-val" id="engine-val">120</span></label>
-        <input type="range" id="engine" min="61" max="326" value="120" step="1" oninput="document.getElementById('engine-val').textContent=this.value; predictPrice();">
+        <input type="range" id="engine" min="61" max="326" value="120" step="1" oninput="document.getElementById('engine-val').textContent=this.value; updateLabels();">
       </div>
 
       <div class="form-group">
         <label>Horsepower — <span class="slider-val" id="hp-val">95</span> HP</label>
-        <input type="range" id="hp" min="48" max="288" value="95" step="1" oninput="document.getElementById('hp-val').textContent=this.value; predictPrice();">
+        <input type="range" id="hp" min="48" max="288" value="95" step="1" oninput="document.getElementById('hp-val').textContent=this.value; updateLabels();">
       </div>
 
       <div class="form-group">
         <label>Curb Weight (lbs) — <span class="slider-val" id="weight-val">2400</span></label>
-        <input type="range" id="weight" min="1488" max="4066" value="2400" step="1" oninput="document.getElementById('weight-val').textContent=this.value; predictPrice();">
+        <input type="range" id="weight" min="1488" max="4066" value="2400" step="1" oninput="document.getElementById('weight-val').textContent=this.value; updateLabels();">
       </div>
 
       <div class="form-group">
         <label>Highway MPG — <span class="slider-val" id="mpg-val">32</span></label>
-        <input type="range" id="mpg" min="16" max="54" value="32" step="1" oninput="document.getElementById('mpg-val').textContent=this.value; predictPrice();">
+        <input type="range" id="mpg" min="16" max="54" value="32" step="1" oninput="document.getElementById('mpg-val').textContent=this.value; updateLabels();">
       </div>
 
       <div class="form-group">
         <label>Width (inches) — <span class="slider-val" id="width-val">65</span></label>
-        <input type="range" id="width" min="60" max="72" value="65" step="1" oninput="document.getElementById('width-val').textContent=this.value; predictPrice();">
+        <input type="range" id="width" min="60" max="72" value="65" step="1" oninput="document.getElementById('width-val').textContent=this.value; updateLabels();">
       </div>
 
       <button class="predict-btn" onclick="predictPrice()">Predict Price</button>
@@ -345,6 +345,21 @@
     premium: 'Premium', luxury: 'Luxury'
   };
 
+  // Sliders only update labels — no price calculation
+  function updateLabels() {
+    const make   = document.getElementById('make').value;
+    const engine = parseInt(document.getElementById('engine').value);
+    const hp     = parseInt(document.getElementById('hp').value);
+    const weight = parseInt(document.getElementById('weight').value);
+    const mpg    = parseInt(document.getElementById('mpg').value);
+    const width  = parseInt(document.getElementById('width').value);
+    document.getElementById('bd-make').textContent   = makeLabels[make];
+    document.getElementById('bd-engine').textContent = engine + ' cc';
+    document.getElementById('bd-hp').textContent     = hp + ' HP';
+    document.getElementById('bd-weight').textContent = weight.toLocaleString() + ' lbs';
+  }
+
+  // Auto-fills sliders when segment changes
   function onMakeChange() {
     const make = document.getElementById('make').value;
     const p = makePresets[make];
@@ -360,9 +375,13 @@
     document.getElementById('mpg-val').textContent    = p.mpg;
     document.getElementById('width-val').textContent  = p.width;
     document.getElementById('bd-make').textContent    = makeLabels[make];
-    predictPrice();
+    // Reset price when segment changes
+    document.getElementById('price-output').textContent = '—';
+    document.getElementById('price-range').textContent = 'Click Predict Price to get result';
+    document.getElementById('api-status').textContent = 'Ready';
   }
 
+  // Button click — calculates and shows price
   function predictPrice() {
     const make   = document.getElementById('make').value;
     const engine = parseInt(document.getElementById('engine').value);
@@ -376,21 +395,18 @@
     document.getElementById('bd-hp').textContent     = hp + ' HP';
     document.getElementById('bd-weight').textContent = weight.toLocaleString() + ' lbs';
 
-    // Normalise each feature to 0-1 based on dataset range
     const engineNorm = (engine - 61)   / (326 - 61);
     const weightNorm = (weight - 1488) / (4066 - 1488);
     const hpNorm     = (hp - 48)       / (288 - 48);
     const mpgNorm    = (54 - mpg)      / (54 - 16);
     const widthNorm  = (width - 60)    / (72 - 60);
 
-    // Weighted score using actual feature importance scores
     const score = (engineNorm * 0.44) +
                   (weightNorm * 0.32) +
                   (hpNorm     * 0.07) +
                   (mpgNorm    * 0.05) +
                   (widthNorm  * 0.04);
 
-    // Map score to actual dataset price range
     const price   = Math.round(5118 + score * (45400 - 5118));
     const clamped = Math.max(5118, Math.min(45400, price));
 
@@ -404,7 +420,6 @@
   }
 
   onMakeChange();
-  predictPrice();
 </script>
 </body>
 </html>
