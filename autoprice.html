@@ -360,6 +360,7 @@
     document.getElementById('mpg-val').textContent    = p.mpg;
     document.getElementById('width-val').textContent  = p.width;
     document.getElementById('bd-make').textContent    = makeLabels[make];
+    predictPrice();
   }
 
   function predictPrice() {
@@ -379,7 +380,7 @@
     const engineNorm = (engine - 61)   / (326 - 61);
     const weightNorm = (weight - 1488) / (4066 - 1488);
     const hpNorm     = (hp - 48)       / (288 - 48);
-    const mpgNorm    = (54 - mpg)      / (54 - 16);   // inverted — lower mpg = higher price
+    const mpgNorm    = (54 - mpg)      / (54 - 16);
     const widthNorm  = (width - 60)    / (72 - 60);
 
     // Weighted score using actual feature importance scores
@@ -397,7 +398,7 @@
       '$' + clamped.toLocaleString();
     document.getElementById('price-range').textContent =
       'Range: $' + Math.max(5118, clamped - 1702).toLocaleString() +
-      ' \u2013 $' + Math.min(45400, clamped + 1702).toLocaleString() + ' (\u00b1 MAE)';
+      ' – $' + Math.min(45400, clamped + 1702).toLocaleString() + ' (± MAE)';
     document.getElementById('api-dot').className = 'api-dot';
     document.getElementById('api-status').textContent = 'Estimate ready';
   }
