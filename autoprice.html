@@ -238,12 +238,12 @@
 <div class="section-wrap" id="predictor">
   <div class="sec-tag">Live Demo</div>
   <h2 class="sec-title">Price Predictor</h2>
-  <p class="sec-sub">Select a car make to auto-fill typical specifications, adjust the sliders if needed, then click Predict. Powered by the trained Random Forest model.</p>
+  <p class="sec-sub">Select a car segment to auto-fill typical specifications, adjust the sliders if needed, then click Predict. Powered by the trained Random Forest model.</p>
 
   <div class="predictor-wrap">
     <div class="predictor-form">
       <h3>Car Specifications</h3>
-      <p class="form-note">Selecting a make auto-fills typical specs. The prediction is based on the 5 sliders only — make is a UX helper.</p>
+      <p class="form-note">Selecting a segment auto-fills typical specs. The prediction is based on the 5 sliders only — segment is a UX helper.</p>
 
       <div class="api-badge">
         <div class="api-dot" id="api-dot"></div>
@@ -251,23 +251,12 @@
       </div>
 
       <div class="form-group">
-        <label>Car Make — auto-fills typical specifications</label>
+        <label>Car Segment — auto-fills typical specifications</label>
         <select id="make" onchange="onMakeChange()">
-          <option value="toyota">Toyota</option>
-          <option value="nissan">Nissan</option>
-          <option value="mazda">Mazda</option>
-          <option value="honda">Honda</option>
-          <option value="mitsubishi">Mitsubishi</option>
-          <option value="volkswagen">Volkswagen</option>
-          <option value="subaru">Subaru</option>
-          <option value="volvo">Volvo</option>
-          <option value="audi">Audi</option>
-          <option value="bmw">BMW</option>
-          <option value="saab">Saab</option>
-          <option value="peugot">Peugeot</option>
-          <option value="mercedes-benz">Mercedes-Benz</option>
-          <option value="jaguar">Jaguar</option>
-          <option value="porsche">Porsche</option>
+          <option value="budget">Budget (Chevrolet, Honda)</option>
+          <option value="midrange" selected>Mid-range (Toyota, Nissan)</option>
+          <option value="premium">Premium (BMW, Audi)</option>
+          <option value="luxury">Luxury (Porsche, Jaguar)</option>
         </select>
       </div>
 
@@ -320,8 +309,8 @@
           <span class="breakdown-val">± $1,702</span>
         </div>
         <div class="breakdown-item">
-          <span class="breakdown-key">Selected make</span>
-          <span class="breakdown-val" id="bd-make">Toyota</span>
+          <span class="breakdown-key">Segment</span>
+          <span class="breakdown-val" id="bd-make">Mid-range</span>
         </div>
         <div class="breakdown-item">
           <span class="breakdown-key">Engine size</span>
@@ -337,7 +326,7 @@
         </div>
       </div>
       <p style="font-size:0.72rem; color:var(--muted); border-top:1px solid var(--border); padding-top:0.9rem; line-height:1.6;">
-        Prediction powered by a Random Forest model trained on the UCI Automobile dataset. Make selection auto-fills typical specifications — the 5 sliders are the actual model inputs.
+        Prediction powered by a Random Forest model trained on the UCI Automobile dataset. Segment selection auto-fills typical specifications — the 5 sliders are the actual model inputs.
       </p>
     </div>
   </div>
@@ -352,29 +341,17 @@
   const API_URL = 'https://car-price-api-u5s4.onrender.com/predict';
 
   const makePresets = {
-    toyota:          { engine: 120, hp: 95,  weight: 2400, mpg: 32, width: 65 },
-    nissan:          { engine: 120, hp: 97,  weight: 2350, mpg: 31, width: 65 },
-    mazda:           { engine: 110, hp: 88,  weight: 2200, mpg: 33, width: 64 },
-    honda:           { engine: 100, hp: 80,  weight: 2100, mpg: 35, width: 64 },
-    mitsubishi:      { engine: 122, hp: 88,  weight: 2350, mpg: 30, width: 65 },
-    volkswagen:      { engine: 109, hp: 90,  weight: 2250, mpg: 32, width: 65 },
-    subaru:          { engine: 108, hp: 82,  weight: 2520, mpg: 30, width: 65 },
-    volvo:           { engine: 141, hp: 114, weight: 2900, mpg: 28, width: 67 },
-    audi:            { engine: 136, hp: 115, weight: 2980, mpg: 25, width: 67 },
-    bmw:             { engine: 164, hp: 182, weight: 3200, mpg: 24, width: 67 },
-    saab:            { engine: 121, hp: 110, weight: 2800, mpg: 26, width: 66 },
-    peugot:          { engine: 120, hp: 97,  weight: 2510, mpg: 29, width: 65 },
-    'mercedes-benz': { engine: 196, hp: 123, weight: 3525, mpg: 22, width: 68 },
-    jaguar:          { engine: 258, hp: 176, weight: 3950, mpg: 19, width: 69 },
-    porsche:         { engine: 203, hp: 207, weight: 3220, mpg: 17, width: 70 }
+    budget:   { engine: 98,  hp: 70,  weight: 1900, mpg: 38, width: 63 },
+    midrange: { engine: 120, hp: 95,  weight: 2400, mpg: 32, width: 65 },
+    premium:  { engine: 164, hp: 182, weight: 3200, mpg: 24, width: 67 },
+    luxury:   { engine: 230, hp: 200, weight: 3800, mpg: 18, width: 69 }
   };
 
   const makeLabels = {
-    toyota: 'Toyota', nissan: 'Nissan', mazda: 'Mazda',
-    honda: 'Honda', mitsubishi: 'Mitsubishi', volkswagen: 'Volkswagen',
-    subaru: 'Subaru', volvo: 'Volvo', audi: 'Audi', bmw: 'BMW',
-    saab: 'Saab', peugot: 'Peugeot', 'mercedes-benz': 'Mercedes-Benz',
-    jaguar: 'Jaguar', porsche: 'Porsche'
+    budget:   'Budget',
+    midrange: 'Mid-range',
+    premium:  'Premium',
+    luxury:   'Luxury'
   };
 
   function onMakeChange() {
@@ -456,6 +433,19 @@
     btn.disabled = false;
     btn.textContent = 'Predict Price';
   }
+
+  // Wake up API when page loads
+  window.addEventListener('load', () => {
+    fetch(API_URL.replace('/predict', '/'))
+      .then(() => {
+        document.getElementById('api-status').textContent = 'Model ready';
+        document.getElementById('api-dot').className = 'api-dot';
+      })
+      .catch(() => {
+        document.getElementById('api-status').textContent = 'Waking up model...';
+        document.getElementById('api-dot').className = 'api-dot loading';
+      });
+  });
 
   onMakeChange();
 </script>
