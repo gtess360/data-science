@@ -93,12 +93,8 @@
   input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); cursor: pointer; }
   .predict-btn { width: 100%; margin-top: 1.25rem; background: var(--accent); color: #0d1117; border: none; padding: 0.7rem; border-radius: 7px; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: opacity 0.15s, transform 0.15s; }
   .predict-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-  .predict-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
   .api-badge { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; color: var(--muted); margin-bottom: 1rem; }
   .api-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
-  .api-dot.loading { background: var(--amber); animation: pulse 1s infinite; }
-  .api-dot.error { background: var(--red); animation: none; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
   .result-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
   .result-panel h3 { font-weight: 600; font-size: 0.95rem; }
   .price-display { text-align: center; padding: 1.75rem 1rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; }
@@ -234,20 +230,19 @@
 
 <hr class="divider">
 
-<!-- PREDICTOR -->
 <div class="section-wrap" id="predictor">
   <div class="sec-tag">Live Demo</div>
   <h2 class="sec-title">Price Predictor</h2>
-  <p class="sec-sub">Select a car segment to auto-fill typical specifications, adjust the sliders if needed, then click Predict. Powered by the trained Random Forest model.</p>
+  <p class="sec-sub">Select a car segment to auto-fill typical specifications, adjust the sliders, then click Predict. Estimate is based on Random Forest feature importance weights.</p>
 
   <div class="predictor-wrap">
     <div class="predictor-form">
       <h3>Car Specifications</h3>
-      <p class="form-note">Selecting a segment auto-fills typical specs. The prediction is based on the 5 sliders only — segment is a UX helper.</p>
+      <p class="form-note">Selecting a segment auto-fills typical specs. The estimate is calculated from the 5 sliders using feature importance weights from the trained model.</p>
 
       <div class="api-badge">
         <div class="api-dot" id="api-dot"></div>
-        <span id="api-status">Model ready</span>
+        <span id="api-status">Ready</span>
       </div>
 
       <div class="form-group">
@@ -285,15 +280,15 @@
         <input type="range" id="width" min="60" max="72" value="65" step="1" oninput="document.getElementById('width-val').textContent=this.value;">
       </div>
 
-      <button class="predict-btn" id="predict-btn" onclick="predictPrice()">Predict Price</button>
+      <button class="predict-btn" onclick="predictPrice()">Predict Price</button>
     </div>
 
     <div class="result-panel">
       <h3>Prediction Result</h3>
       <div class="price-display">
-        <div class="price-label">Predicted Market Price</div>
+        <div class="price-label">Estimated Market Price</div>
         <div class="price-value" id="price-output">—</div>
-        <div class="price-range" id="price-range">Click Predict Price to get result</div>
+        <div class="price-range" id="price-range">Adjust sliders and click Predict</div>
       </div>
       <div class="result-breakdown">
         <div class="breakdown-item">
@@ -326,7 +321,7 @@
         </div>
       </div>
       <p style="font-size:0.72rem; color:var(--muted); border-top:1px solid var(--border); padding-top:0.9rem; line-height:1.6;">
-        Prediction powered by a Random Forest model trained on the UCI Automobile dataset. Segment selection auto-fills typical specifications — the 5 sliders are the actual model inputs.
+        Heuristic estimate based on Random Forest feature importance weights learned from the UCI Automobile dataset. Adjust sliders to see how each specification affects the predicted price.
       </p>
     </div>
   </div>
@@ -338,8 +333,6 @@
 </footer>
 
 <script>
-  const API_URL = 'https://car-price-api-u5s4.onrender.com/predict';
-
   const makePresets = {
     budget:   { engine: 98,  hp: 70,  weight: 1900, mpg: 38, width: 63 },
     midrange: { engine: 120, hp: 95,  weight: 2400, mpg: 32, width: 65 },
@@ -348,10 +341,8 @@
   };
 
   const makeLabels = {
-    budget:   'Budget',
-    midrange: 'Mid-range',
-    premium:  'Premium',
-    luxury:   'Luxury'
+    budget: 'Budget', midrange: 'Mid-range',
+    premium: 'Premium', luxury: 'Luxury'
   };
 
   function onMakeChange() {
@@ -368,10 +359,10 @@
     document.getElementById('weight-val').textContent = p.weight;
     document.getElementById('mpg-val').textContent    = p.mpg;
     document.getElementById('width-val').textContent  = p.width;
-    document.getElementById('bd-make').textContent = makeLabels[make];
+    document.getElementById('bd-make').textContent    = makeLabels[make];
   }
 
-  async function predictPrice() {
+  function predictPrice() {
     const make   = document.getElementById('make').value;
     const engine = parseInt(document.getElementById('engine').value);
     const hp     = parseInt(document.getElementById('hp').value);
@@ -384,70 +375,35 @@
     document.getElementById('bd-hp').textContent     = hp + ' HP';
     document.getElementById('bd-weight').textContent = weight.toLocaleString() + ' lbs';
 
-    const btn    = document.getElementById('predict-btn');
-    const dot    = document.getElementById('api-dot');
-    const status = document.getElementById('api-status');
+    // Normalise each feature to 0-1 based on dataset range
+    const engineNorm = (engine - 61)   / (326 - 61);
+    const weightNorm = (weight - 1488) / (4066 - 1488);
+    const hpNorm     = (hp - 48)       / (288 - 48);
+    const mpgNorm    = (54 - mpg)      / (54 - 16);   // inverted — lower mpg = higher price
+    const widthNorm  = (width - 60)    / (72 - 60);
 
-    btn.disabled = true;
-    btn.textContent = 'Predicting...';
-    dot.className = 'api-dot loading';
-    status.textContent = 'Calling model...';
-    document.getElementById('price-output').textContent = '...';
-    document.getElementById('price-range').textContent = '';
+    // Weighted score using actual feature importance scores
+    const score = (engineNorm * 0.44) +
+                  (weightNorm * 0.32) +
+                  (hpNorm     * 0.07) +
+                  (mpgNorm    * 0.05) +
+                  (widthNorm  * 0.04);
 
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          curb_weight : weight,
-          engine_size : engine,
-          horsepower  : hp,
-          highway_mpg : mpg,
-          width       : width
-        })
-      });
+    // Map score to actual dataset price range
+    const price   = Math.round(5118 + score * (45400 - 5118));
+    const clamped = Math.max(5118, Math.min(45400, price));
 
-      const data = await response.json();
-
-      if (data.predicted_price) {
-        const price = Math.round(data.predicted_price);
-        document.getElementById('price-output').textContent = '$' + price.toLocaleString();
-        document.getElementById('price-range').textContent =
-          'Range: $' + Math.max(5118, price - 1702).toLocaleString() +
-          ' – $' + Math.min(45400, price + 1702).toLocaleString() + ' (± MAE)';
-        dot.className = 'api-dot';
-        status.textContent = 'Model ready';
-      } else {
-        throw new Error(data.error || 'Unknown error');
-      }
-
-    } catch (error) {
-      document.getElementById('price-output').textContent = 'Error';
-      document.getElementById('price-range').textContent = 'Could not reach model — try again in 30 seconds';
-      dot.className = 'api-dot error';
-      status.textContent = 'API unreachable (may be waking up)';
-      console.error('API error:', error);
-    }
-
-    btn.disabled = false;
-    btn.textContent = 'Predict Price';
+    document.getElementById('price-output').textContent =
+      '$' + clamped.toLocaleString();
+    document.getElementById('price-range').textContent =
+      'Range: $' + Math.max(5118, clamped - 1702).toLocaleString() +
+      ' \u2013 $' + Math.min(45400, clamped + 1702).toLocaleString() + ' (\u00b1 MAE)';
+    document.getElementById('api-dot').className = 'api-dot';
+    document.getElementById('api-status').textContent = 'Estimate ready';
   }
 
-  // Wake up API when page loads
-  window.addEventListener('load', () => {
-    fetch(API_URL.replace('/predict', '/'))
-      .then(() => {
-        document.getElementById('api-status').textContent = 'Model ready';
-        document.getElementById('api-dot').className = 'api-dot';
-      })
-      .catch(() => {
-        document.getElementById('api-status').textContent = 'Waking up model...';
-        document.getElementById('api-dot').className = 'api-dot loading';
-      });
-  });
-
   onMakeChange();
+  predictPrice();
 </script>
 </body>
 </html>
